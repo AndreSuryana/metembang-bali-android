@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Custom Colors -->
+    <color name="color_primary">#168FFF</color>
+    <color name="color_secondary">#999999</color>
+    <color name="color_success">#22BB33</color>
+    <color name="color_warning">#FFC839</color>
+    <color name="color_danger">#BB2124</color>
+    <color name="color_text_secondary">#FFC6C6C6</color>
+    <color name="color_black_a15">#26000000</color>
+    <color name="color_light_blue">#D3EAFF</color>
+
+</resources>

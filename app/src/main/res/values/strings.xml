@@ -1,0 +1,170 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- App Name -->
+    <string name="app_name">Metembang Bali</string>
+
+    <!-- Title -->
+    <string name="title_home">Beranda</string>
+    <string name="title_search">Pencarian</string>
+    <string name="title_explore">Penjelajah</string>
+    <string name="title_profile">Profil</string>
+    <string name="title_detail_tembang">Detail Tembang</string>
+    <string name="title_edit_profile">Edit Profil</string>
+    <string name="title_change_password">Ubah Password</string>
+    <string name="title_search_filter">Filter Pencarian</string>
+    <string name="title_submission">Submission</string>
+    <string name="title_add_submission">Tambah Submission</string>
+    <string name="title_general">Umum</string>
+    <string name="title_additional">Tambahan</string>
+    <string name="title_media">Media</string>
+
+    <!-- Heading -->
+    <string name="heading_get_started">Introducing Metembang Bali</string>
+    <string name="heading_sign_in">Sign in</string>
+    <string name="heading_sign_up">Sign up</string>
+    <string name="heading_latest">Tembang terbaru</string>
+    <string name="heading_top_most_viewed">Top 5 tembang yang sering dilihat</string>
+    <string name="heading_search_result">Hasil pencarian tembang</string>
+    <string name="heading_tembang">Tembang</string>
+    <string name="heading_account">Akun</string>
+    <string name="heading_delete_submission">Hapus submission</string>
+
+    <!-- Description -->
+    <string name="description_get_started">Metembang Bali adalah aplikasi berbasis mobile untuk mengenal Tembang Bali.</string>
+    <string name="description_search_result" tools:ignore="PluralsCandidate">%d tembang ditemukan</string>
+    <string name="description_label_lyrics">Lirik tembang dituliskan per-baris</string>
+
+    <!-- Menu Item -->
+    <string name="menu_submission">Submission</string>
+    <string name="menu_edit_profile">Edit Profil</string>
+    <string name="menu_change_password">Ganti Password</string>
+    <string name="menu_sign_out">Sign Out</string>
+    <string name="menu_sign_in">Sign In</string>
+    <string name="menu_lyrics_show">Tampilkan lirik</string>
+    <string name="menu_lyrics_hide">Sembunyikan lirik</string>
+    <string name="menu_info_detail_show">Tampilkan info detail</string>
+    <string name="menu_info_detail_hide">Sembunyikan info detail</string>
+
+    <!-- Success Message -->
+    <string name="success_edit_profile">Profil telah berhasil diperbarui</string>
+    <string name="success_change_password">Password telah berhasil diperbarui</string>
+    <string name="success_delete_submission">Submission berhasil dihapus</string>
+
+    <!-- Error Message -->
+    <string name="error_default_network_error">Something went wrong!</string>
+    <string name="error_password_not_match">Password baru tidak cocok dengan konfirmasi password</string>
+    <string name="error_no_previous_tembang">Tidak ada tembang sebelumnya</string>
+
+    <!-- Warning Message -->
+    <string name="warning_submission_status_pending">Submission masih dalam tahap review</string>
+    <string name="warning_submission_status_rejected">Submission tembang Anda telah ditolak</string>
+    <string name="warning_no_image_file">File gambar tidak boleh kosong</string>
+
+    <!-- Input Label -->
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_complete_name">Nama Lengkap</string>
+    <string name="label_category">Kategori</string>
+    <string name="label_sub_category">Sub Kategori</string>
+    <string name="label_usage_type">Tipe Kegunaan</string>
+    <string name="label_usage">Kegunaan</string>
+    <string name="label_mood">Suasana</string>
+    <string name="label_rule">Aturan</string>
+    <string name="label_phone">Nomor Telepon</string>
+    <string name="label_occupation">Pekerjaan</string>
+    <string name="label_address">Alamat</string>
+    <string name="label_old_password">Password Lama</string>
+    <string name="label_new_password">Password Baru</string>
+    <string name="label_confirm_password">Konfirmasi Password</string>
+    <string name="label_author">Penulis</string>
+    <string name="label_meaning">Makna</string>
+    <string name="label_cover_source">Sumber Cover</string>
+    <string name="label_created_at">Tanggal Dibuat</string>
+    <string name="label_title">Judul</string>
+    <string name="label_lyrics">Lirik</string>
+    <string name="label_lyrics_idn">Lirik (Indonesia)</string>
+    <string name="label_cover">Cover</string>
+    <string name="label_audio">Audio</string>
+
+    <!-- Input Hint -->
+    <string name="hint_email">email@example.com</string>
+    <string name="hint_password">***********</string>
+    <string name="hint_complete_name">nama lengkap</string>
+    <string name="hint_category">kategori tembang</string>
+    <string name="hint_sub_category">sub kategori tembang</string>
+    <string name="hint_usage_type">tipe kegunaan tembang</string>
+    <string name="hint_usage">kegunaan tembang</string>
+    <string name="hint_mood">suasana tembang</string>
+    <string name="hint_rule">aturan/uger-uger tembang</string>
+    <string name="hint_phone">0812 XXXX XXXX</string>
+    <string name="hint_occupation">pekerjaan (opsional)</string>
+    <string name="hint_address">alamat</string>
+    <string name="hint_title">judul tembang</string>
+    <string name="hint_lyrics_input">lirik baris ke-%d</string>
+    <string name="hint_meaning">makna tembang</string>
+    <string name="hint_cover_source">contoh: google.com</string>
+    <string name="hint_audio_file">file audio (mp3/wav)</string>
+
+    <!-- Input Helper -->
+    <string name="helper_empty_email">Email tidak boleh kosong</string>
+    <string name="helper_empty_password">Password tidak boleh kosong</string>
+    <string name="helper_empty_complete_name">Nama lengkap tidak boleh kosong</string>
+    <string name="helper_empty_phone">Nomor telepon tidak boleh kosong</string>
+    <string name="helper_empty_address">Alamat tidak boleh kosong</string>
+    <string name="helper_invalid_email">Email tidak valid</string>
+    <string name="helper_empty_old_password">Password lama tidak boleh kosong</string>
+    <string name="helper_empty_new_password">Password baru tidak boleh kosong</string>
+    <string name="helper_empty_confirm_password">Konfirmasi password baru tidak boleh kosong</string>
+    <string name="helper_empty_title">Judul tembang tidak boleh kosong</string>
+    <string name="helper_empty_category">Mohon pilih kategori tembang</string>
+    <string name="helper_empty_sub_category">Mohon pilih sub kategori tembang</string>
+    <string name="helper_empty_lyrics">Lirik tembang tidak boleh kosong</string>
+    <string name="helper_empty_usage">Mohon pilih kegunaan tembang</string>
+    <string name="helper_empty_audio_file">File audio tidak boleh kosong</string>
+
+    <!-- Button -->
+    <string name="btn_get_started">Get Started</string>
+    <string name="btn_sign_in">Sign in</string>
+    <string name="btn_sign_in_guest">Sign in as Guest</string>
+    <string name="btn_sign_up">Sign up</string>
+    <string name="btn_try_again">Coba lagi</string>
+    <string name="btn_set_filter">Set Filter</string>
+    <string name="btn_reset_filter">Reset</string>
+    <string name="btn_save">Simpan</string>
+    <string name="btn_prev">Sebelumnya</string>
+    <string name="btn_next">Selanjutnya</string>
+    <string name="btn_finish">Selesai</string>
+
+    <!-- Radio Button -->
+    <string name="rb_no_cover">Jangan isi cover</string>
+    <string name="rb_add_cover">Tambah cover</string>
+    <string name="rb_no_audio">Jangan isi audio</string>
+    <string name="rb_audio_file">Pilih file audio</string>
+    <string name="rb_record_audio">Rekam audio baru</string>
+    <string name="btn_upload_image">Unggah Gambar</string>
+    <string name="btn_upload">Unggah</string>
+
+    <!-- Prompt -->
+    <string name="prompt_dont_have_account">Belum memiliki akun?</string>
+    <string name="prompt_already_have_account">Sudah memiliki akun?</string>
+    <string name="prompt_delete_submission">Apakah Anda yakin ingin menghapus submission ini?</string>
+    <string name="prompt_choose_image_source">Pilih sumber file gambar</string>
+    <string name="prompt_add_submission">Apakah Anda yakin ingin menambahkan submission ini?</string>
+
+    <!-- Transition Name -->
+    <string name="trans_logo">transition_logo</string>
+    <string name="trans_background">transition_background</string>
+    <string name="trans_input_email">transition_input_email</string>
+    <string name="trans_input_password">transition_input_password</string>
+    <string name="trans_primary_button">transition_primary_button</string>
+
+    <!-- Other -->
+    <string name="or">or</string>
+    <string name="rv_result_layout_behavior">scroll|enterAlways</string>
+    <string name="result_not_found">Tembang tidak ditemukan</string>
+    <string name="guest_name">Guest</string>
+    <string name="duration_placeholder">--:--</string>
+    <string name="answer_yes">Ya</string>
+    <string name="answer_no">Tidak</string>
+    <string name="answer_cancel">Batal</string>
+
+</resources>

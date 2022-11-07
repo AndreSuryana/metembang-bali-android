@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_lyrics"
+        android:title="@string/menu_lyrics_show" />
+
+    <item
+        android:id="@+id/menu_info_detail"
+        android:title="@string/menu_info_detail_show" />
+</menu>

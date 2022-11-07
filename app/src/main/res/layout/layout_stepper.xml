@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="8dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/step_general"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_check_circle"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/color_secondary"
+        android:fontFamily="@font/corbel_bold"
+        android:gravity="center_vertical"
+        android:text="@string/title_general"
+        android:textColor="@color/color_secondary"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider_1"
+        android:layout_width="32dp"
+        android:layout_height="2dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="12dp"
+        android:background="@color/color_secondary" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/step_additional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_check_circle"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/color_secondary"
+        android:fontFamily="@font/corbel_bold"
+        android:gravity="center_vertical"
+        android:text="@string/title_additional"
+        android:textColor="@color/color_secondary"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider_2"
+        android:layout_width="32dp"
+        android:layout_height="2dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="12dp"
+        android:background="@color/color_secondary" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/step_media"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_check_circle"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/color_secondary"
+        android:enabled="false"
+        android:fontFamily="@font/corbel_bold"
+        android:gravity="center_vertical"
+        android:text="@string/title_media"
+        android:textColor="@color/color_secondary"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

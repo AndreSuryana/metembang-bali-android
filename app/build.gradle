@@ -1,0 +1,160 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.andresuryana.metembangbali"
+        minSdk 26
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_URL", "\"http://172.20.10.8:8000/api/\""
+        }
+        debug {
+            buildConfigField "String", "API_URL", "\"http://192.168.1.14:8000/api/\""
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    ext {
+        // Default
+        coreKtxVersion = '1.8.0'
+        appCompatVersion = '1.5.1'
+        materialVersion = '1.7.0'
+        constraintLayoutVersion = '2.1.4'
+        jUnitVersion = '4.13.2'
+        testJUnitVersion = '1.1.3'
+        espressoVersion = '3.4.0'
+
+        // Circle Image View
+        circleImageVersion = '3.1.0'
+
+        // Glide
+        glideVersion = '4.12.0'
+
+        // Lifecycle
+        lifecycleVersion = '2.5.1'
+
+        // Coroutines
+        coroutinesVersion = '1.6.0'
+
+        // Gson
+        gsonVersion = '2.9.0'
+
+        // Dagger Hilt
+        daggerHiltVersion = '2.39.1'
+
+        // Fragment
+        fragmentVersion = '1.5.4'
+
+        // Navigation
+        navigationVersion = '2.5.3'
+        legacyVersion = '1.0.0'
+
+        // Retrofit
+        retrofitVersion = '2.9.0'
+        loggingInterceptorVersion = '4.9.2'
+
+        // Exo Player
+        exoPlayerVersion = '2.18.1'
+
+        // Image Picker
+        imagePickerVersion = '2.1'
+
+        // Android Wave Recorder
+        recorderVersion = '1.7.0'
+
+        // Audio Visualizer
+        audioVisualizerVersion = '1.0.1'
+    }
+
+    // Default
+    // noinspection GradleDependency
+    implementation "androidx.core:core-ktx:$coreKtxVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    testImplementation "junit:junit:$jUnitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$testJUnitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+
+    // Circle Image View
+    implementation "de.hdodenhof:circleimageview:$circleImageVersion"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    // Dagger Hilt
+    implementation "com.google.dagger:dagger-android-support:$daggerHiltVersion"
+    implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+
+    // Fragment
+    implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation "androidx.legacy:legacy-support-v4:$legacyVersion"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion"
+
+    // Exo Player
+    implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
+
+    // Image Picker
+    implementation "com.github.dhaval2404:imagepicker:$imagePickerVersion"
+
+    // Android Wave Recorder
+    implementation "com.github.squti:Android-Wave-Recorder:$recorderVersion"
+
+    // Audio Visualizer
+    implementation "com.github.Armen101:AudioRecordView:$audioVisualizerVersion"
+}

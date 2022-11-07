@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/input_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="16dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/corbel_bold"
+            android:text="@string/label_cover"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/rg_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:foregroundTint="@color/color_primary">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_no_cover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/color_primary"
+                android:checked="true"
+                android:fontFamily="@font/corbel"
+                android:minHeight="0dp"
+                android:text="@string/rb_no_cover" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_add_cover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/color_primary"
+                android:fontFamily="@font/corbel"
+                android:minHeight="0dp"
+                android:text="@string/rb_add_cover" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/add_cover_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                tools:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="16dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/iv_cover"
+                        android:layout_width="144dp"
+                        android:layout_height="144dp"
+                        android:src="@drawable/ic_cover_placeholder"
+                        app:shapeAppearance="@style/RoundedCornerImageView.12dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_upload_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/corbel_bold"
+                        android:text="@string/btn_upload_image"
+                        android:textAllCaps="false"
+                        app:cornerRadius="24dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/label_cover_source"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/corbel_bold"
+                    android:text="@string/label_cover_source"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_cover_source"
+                    style="@style/MyTextInputLayout_NoHorizontalPadding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    app:layout_constraintTop_toBottomOf="@+id/label_cover_source">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_cover_source"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        android:hint="@string/hint_cover_source"
+                        android:inputType="textNoSuggestions"
+                        android:labelFor="@id/til_category"
+                        android:paddingHorizontal="0dp"
+                        android:paddingVertical="12dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </RadioGroup>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/corbel_bold"
+            android:text="@string/label_audio"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/rg_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foregroundTint="@color/color_primary">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_no_audio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/color_primary"
+                android:checked="true"
+                android:fontFamily="@font/corbel"
+                android:minHeight="0dp"
+                android:text="@string/rb_no_audio" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_audio_file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/color_primary"
+                android:fontFamily="@font/corbel"
+                android:minHeight="0dp"
+                android:text="@string/rb_audio_file" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/audio_file_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp"
+                tools:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_audio_file"
+                    style="@style/MyTextInputLayout_NoHorizontalPadding"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_audio_file"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/white"
+                        android:focusable="false"
+                        android:hint="@string/hint_audio_file"
+                        android:inputType="textNoSuggestions"
+                        android:labelFor="@id/til_category"
+                        android:paddingHorizontal="0dp"
+                        android:paddingVertical="12dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_upload_audio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:fontFamily="@font/corbel_bold"
+                    android:text="@string/btn_upload"
+                    android:textAllCaps="false"
+                    app:cornerRadius="24dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rb_record_audio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/color_primary"
+                android:fontFamily="@font/corbel"
+                android:minHeight="0dp"
+                android:text="@string/rb_record_audio" />
+
+        </RadioGroup>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_prev"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/color_light_blue"
+                android:fontFamily="@font/corbel_bold"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/btn_prev"
+                android:textAllCaps="false"
+                android:textColor="@color/color_primary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/color_light_blue"
+                app:cornerRadius="24dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_finish"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/corbel_bold"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/btn_finish"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="24dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</ScrollView>
