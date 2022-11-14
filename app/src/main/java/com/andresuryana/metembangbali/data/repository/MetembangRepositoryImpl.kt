@@ -1,15 +1,16 @@
 package com.andresuryana.metembangbali.data.repository
 
-import android.util.Log
 import com.andresuryana.metembangbali.data.model.*
 import com.andresuryana.metembangbali.data.remote.MetembangService
 import com.andresuryana.metembangbali.utils.Resource
 import com.google.gson.Gson
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
-import org.json.JSONObject
+import org.json.JSONArray
 import retrofit2.HttpException
 import java.io.File
 import java.io.IOException
@@ -206,36 +207,67 @@ class MetembangRepositoryImpl @Inject constructor(
         audioFile: File?
     ): Resource<Submission> {
 
-        // TODO : Implement request body here or in view model?
-        // Rule
-        val ruleJson = HashMap<String, String>()
+        // Media content type
+        val contentType = "text/plain".toMediaType()
+
+        // Create request body
+        val requestBody = HashMap<String?, RequestBody?>()
+
+        // General data request body
+        requestBody["title"] = title?.toRequestBody(contentType)
+        requestBody["category"] = category?.id?.toRequestBody(contentType)
+        if (subCategory != null) requestBody["sub_category"] =
+            subCategory.id.toRequestBody(contentType)
+        requestBody["lyrics"] = Gson().toJson(lyrics).toRequestBody(contentType)
+
+        // Additional data request body
+        if (usages?.isNotEmpty() == true) {
+            // Create usages json array
+            val usagesJsonArray = JSONArray()
+            usages.forEach {
+                val usageJson = HashMap<String, String>()
+                usageJson["type"] = it.typeId
+                usageJson["activity"] = it.activity
+                usagesJsonArray.put(usageJson)
+            }
+
+            requestBody["usages"] = usagesJsonArray.toString().toRequestBody(contentType)
+        }
+
+        if (mood != null)
+            requestBody["mood"] = mood.id.toRequestBody(contentType)
+
         if (rule != null) {
-            ruleJson["name"] = rule.name ?: title.toString()
+            // Create rule json
+            val ruleJson = HashMap<String, String>()
+            ruleJson["name"] = title.toString()
             ruleJson["guru_dingdong"] = rule.guruDingdong
             ruleJson["guru_wilang"] = rule.guruWilang
             ruleJson["guru_gatra"] = rule.guruGatra.toString()
+
+            requestBody["rule"] = ruleJson.toString().toRequestBody(contentType)
         }
 
-        val body = JSONObject().run {
-            put("title", title)
-            put("category", category?.id)
-            put("subCategory", subCategory?.id)
-            put("lyrics", lyrics)
-            put("usage_type", usageType?.id)
-            put("usage", usages)
-            put("mood", mood?.id)
-            put("rule", ruleJson)
-            put("meaning", meaning)
-            put("lyrics_idn", lyricsIDN)
-            put("cover", coverImageFile?.asRequestBody())
-            put("cover_source", coverSource)
-            put("audio", audioFile?.asRequestBody())
-            toString().toRequestBody()
-        }
+        if (meaning != null)
+            requestBody["meaning"] = meaning.toRequestBody(contentType)
 
-        Log.d("Repository", "body=$body")
+        if (lyricsIDN?.isNotEmpty() == true)
+            requestBody["lyrics_idn"] = Gson().toJson(lyricsIDN).toRequestBody(contentType)
 
-        val response = service.createSubmission(body)
+        // Media data request body
+        if (coverImageFile != null)
+            requestBody["cover\"; filename=\"${coverImageFile.name}\" "] =
+                coverImageFile.asRequestBody(contentType)
+
+        if (coverSource != null)
+            requestBody["cover_source"] = coverSource.toRequestBody(contentType)
+
+        if (audioFile != null)
+            requestBody["audio\"; filename=\"${audioFile.name}\" "] =
+                audioFile.asRequestBody(contentType)
+
+
+        val response = service.createSubmission(requestBody)
         val result = response.body()
 
         return try {
