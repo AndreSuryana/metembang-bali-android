@@ -48,6 +48,7 @@
     <string name="success_edit_profile">Profil telah berhasil diperbarui</string>
     <string name="success_change_password">Password telah berhasil diperbarui</string>
     <string name="success_delete_submission">Submission berhasil dihapus</string>
+    <string name="success_add_submission">Submission berhasil dikirim</string>
 
     <!-- Error Message -->
     <string name="error_default_network_error">Something went wrong!</string>
@@ -120,6 +121,7 @@
     <string name="helper_empty_lyrics">Lirik tembang tidak boleh kosong</string>
     <string name="helper_empty_usage">Mohon pilih kegunaan tembang</string>
     <string name="helper_empty_audio_file">File audio tidak boleh kosong</string>
+    <string name="helper_empty_cover_source">Sumber cover tidak boleh kosong</string>
 
     <!-- Button -->
     <string name="btn_get_started">Get Started</string>
