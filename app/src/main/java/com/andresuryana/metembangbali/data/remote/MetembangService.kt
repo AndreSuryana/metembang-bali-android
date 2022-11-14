@@ -78,10 +78,10 @@ interface MetembangService {
     /**
      * Create submission
      */
-    @Headers("Content-Type: application/json")
+    @Multipart
     @POST("v1/user/submission")
     suspend fun createSubmission(
-        @Body body: RequestBody
+        @PartMap body: HashMap<String?, RequestBody?>
     ): Response<Wrapper<Submission>>
 
     /**
