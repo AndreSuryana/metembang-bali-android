@@ -200,6 +200,37 @@
                 android:minHeight="0dp"
                 android:text="@string/rb_record_audio" />
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/audio_record_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp"
+                tools:layout_height="wrap_content">
+
+                <com.visualizer.amplitude.AudioRecordView
+                    android:id="@+id/record_view"
+                    android:layout_width="0dp"
+                    android:layout_height="58dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    app:chunkAlignTo="center"
+                    app:chunkColor="@color/color_primary"
+                    app:chunkRoundedCorners="true" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/color_primary"
+                    android:src="@drawable/ic_record"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:tint="@color/white" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
         </RadioGroup>
 
         <androidx.appcompat.widget.LinearLayoutCompat
