@@ -8,8 +8,11 @@ import com.andresuryana.metembangbali.data.model.Submission
 import com.andresuryana.metembangbali.data.model.Tembang
 import com.andresuryana.metembangbali.utils.Ext.spaceCamelCase
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
+
 
 object Helpers {
 
@@ -68,5 +71,10 @@ object Helpers {
         return Snackbar.make(view, message, duration).apply {
             setBackgroundTint(ContextCompat.getColor(view.context, R.color.color_success))
         }
+    }
+
+    fun generateFilename(prefix: String, extension: String): String {
+        val formatted = SimpleDateFormat("yyyyMMdd_hhmmss", Locale.getDefault()).format(Date())
+        return "/${prefix}_${formatted}.${extension}"
     }
 }
