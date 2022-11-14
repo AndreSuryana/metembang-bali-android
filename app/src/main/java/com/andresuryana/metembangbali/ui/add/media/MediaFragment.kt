@@ -1,34 +1,43 @@
 package com.andresuryana.metembangbali.ui.add.media
 
+import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.andresuryana.metembangbali.R
 import com.andresuryana.metembangbali.databinding.FragmentMediaBinding
+import com.andresuryana.metembangbali.dialog.LoadingDialogFragment
 import com.andresuryana.metembangbali.helper.AnimationHelper.animateSlide
 import com.andresuryana.metembangbali.helper.Helpers
 import com.andresuryana.metembangbali.helper.Helpers.snackBarWarning
-import com.andresuryana.metembangbali.helper.IntentHelper
 import com.andresuryana.metembangbali.ui.add.AddSubmissionViewModel
+import com.andresuryana.metembangbali.utils.AudioRecorder
+import com.andresuryana.metembangbali.utils.event.SubmissionEvent
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.ImagePicker.Companion.RESULT_ERROR
+import com.github.squti.androidwaverecorder.RecorderState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
+import java.io.File
+import java.util.*
+import kotlin.concurrent.schedule
 
 @AndroidEntryPoint
 class MediaFragment : Fragment() {
@@ -42,6 +51,15 @@ class MediaFragment : Fragment() {
         requireActivity()
     })
 
+    // Loading dialog
+    private val loadingDialog = LoadingDialogFragment()
+
+    // Audio recorder
+    private lateinit var recorder: AudioRecorder
+
+    // Recorder state
+    private var isRecording: Boolean = false
+
     // Image picker register activity result
     private val startImagePickerResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -50,6 +68,7 @@ class MediaFragment : Fragment() {
                     RESULT_OK -> {
                         // Image uri from data
                         val imageUri = it.data?.data!!
+                        Log.d("MediaFragment", "imageResult: uri=$imageUri")
 
                         // Convert uri to file
                         viewModel.coverImageFile = imageUri.toFile()
@@ -74,6 +93,31 @@ class MediaFragment : Fragment() {
             }
         }
 
+//    // Audio register activity result
+//    private val startAudioForResult =
+//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+//            try {
+//                if (it.resultCode == RESULT_OK && it.data?.data != null) {
+//                    // Audio uri from data
+//                    val audioUri = it.data?.data!!
+//                    Log.d("MediaFragment", "audioResult: uri=$audioUri}")
+//
+//                    // Convert uri to file
+//                    val audioFile = audioUri.toAudioFile(requireActivity())
+//                    Log.d("MediaFragment", "audioResultFile: uri=${audioFile?.absoluteFile}")
+//                    Log.d("MediaFragment", "audioResultFile: name=${audioFile?.name}")
+//                    Log.d("MediaFragment", "audioResultFile: extension=${audioFile?.extension}")
+//
+//                    viewModel.audioFile = audioFile
+//
+//                    // Display path name
+//                    binding.etAudioFile.setText(audioFile?.name)
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+//        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,11 +126,33 @@ class MediaFragment : Fragment() {
         // Inflate layout
         _binding = FragmentMediaBinding.inflate(layoutInflater)
 
+        // Init audio recorder
+        recorder = AudioRecorder(requireContext())
+        recorder.setOnAmplitudeListener {
+            Log.d("AudioRecorder", "onAmplitudeListener: amplitude=$it")
+            binding.recordView.update(it)
+        }
+        recorder.setOnStateChangeListener {
+            when (it) {
+                RecorderState.RECORDING -> recorderStateStart()
+                RecorderState.STOP -> recorderStateStop()
+                else -> recorderStateStop()
+            }
+        }
+
         // Setup radio button listener
         setupRadioButtonListener()
 
+        // Observe submission
+        lifecycleScope.launchWhenStarted {
+            viewModel.submission.collectLatest { observeSubmission(it) }
+        }
+
         // Setup button listener
         setupButtonListener()
+
+        // TODO : Remove this code if audio file picker already fixed!!!
+        binding.rbAudioFile.visibility = View.GONE
 
         return binding.root
     }
@@ -106,6 +172,10 @@ class MediaFragment : Fragment() {
                         currentHeight = binding.addCoverContainer.measuredHeight,
                         newHeight = 0
                     )
+
+                    // Reset value
+                    viewModel.coverImageFile = null
+                    viewModel.coverSource = null
                 }
                 R.id.rb_add_cover -> {
                     // Set measured params
@@ -133,24 +203,62 @@ class MediaFragment : Fragment() {
                         newHeight = 0
                     )
 
-                    // TODO : Hide audio recorder container
+                    // Hide audio record container
+                    binding.audioRecordContainer.animateSlide(
+                        currentHeight = binding.audioRecordContainer.measuredHeight,
+                        newHeight = 0
+                    )
+
+                    // Reset value
+                    viewModel.audioFile = null
                 }
-                R.id.rb_audio_file -> {
+//                R.id.rb_audio_file -> {
+//                    // Hide audio record container
+//                    binding.audioRecordContainer.animateSlide(
+//                        currentHeight = binding.audioRecordContainer.measuredHeight,
+//                        newHeight = 0
+//                    )
+//
+//                    // Set measured params
+//                    binding.audioFileContainer.measure(
+//                        ViewGroup.LayoutParams.MATCH_PARENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT
+//                    )
+//
+//                    // Show audio file container
+//                    binding.audioFileContainer.animateSlide(
+//                        currentHeight = 0,
+//                        newHeight = binding.audioFileContainer.measuredHeight
+//                    )
+//
+//                    // Clear file path in edit text
+//                    binding.etAudioFile.setText("")
+//
+//                    // Reset value
+//                    viewModel.audioFile = null
+//
+//                }
+                R.id.rb_record_audio -> {
+                    // Reset value
+                    viewModel.audioFile = null
+
+                    // Hide audio file container
+                    binding.audioFileContainer.animateSlide(
+                        currentHeight = binding.audioFileContainer.measuredHeight,
+                        newHeight = 0
+                    )
+
                     // Set measured params
-                    binding.audioFileContainer.measure(
+                    binding.audioRecordContainer.measure(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                     )
 
-                    // Show audio file container
-                    binding.audioFileContainer.animateSlide(
+                    // Show audio record container
+                    binding.audioRecordContainer.animateSlide(
                         currentHeight = 0,
-                        newHeight = binding.audioFileContainer.measuredHeight
+                        newHeight = binding.audioRecordContainer.measuredHeight
                     )
-                }
-                R.id.rb_record_audio -> {
-                    // TODO : Show audio recorder container
-                    Toast.makeText(activity, "Record audio", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -159,12 +267,50 @@ class MediaFragment : Fragment() {
     private fun setupButtonListener() {
         // Button upload image listener
         binding.btnUploadImage.setOnClickListener {
-            startImagePickerResult.launch(IntentHelper(requireActivity()).chooserImage)
+            ImagePicker.with(requireActivity())
+                .cropSquare()
+                .galleryMimeTypes(arrayOf("image/jpg", "image/jpeg", "image/png"))
+                .maxResultSize(400, 400)
+                .compress(1024)
+                .saveDir(File(activity?.filesDir, "Metembang Bali"))
+                .createIntent {
+                    startImagePickerResult.launch(it)
+                }
         }
 
-        // Button upload audio listener
-        binding.btnUploadAudio.setOnClickListener {
-            // TODO : Create activity result intent for pick audio file
+//        // Button upload audio listener
+//        binding.btnUploadAudio.setOnClickListener {
+//            Intent().also {
+//                it.action = Intent.ACTION_GET_CONTENT
+//                it.type = "audio/*"
+//                it.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("audio/mpeg", "audio/wav"))
+//                startAudioForResult.launch(it)
+//            }
+//        }
+
+        // Button record/stop listener
+        binding.btnRecord.setOnClickListener {
+            // Start/stop recorder
+            if (!isRecording) {
+                // Check permission
+                if (ContextCompat.checkSelfPermission(
+                        requireActivity(),
+                        Manifest.permission.RECORD_AUDIO
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        arrayOf(Manifest.permission.RECORD_AUDIO),
+                        70
+                    )
+                } else {
+                    recorder.startRecording()
+                }
+            } else {
+                recorder.stopRecordingForResult {
+                    viewModel.audioFile = it
+                }
+            }
         }
 
         // Button prev listener
@@ -183,10 +329,11 @@ class MediaFragment : Fragment() {
         val coverSource = binding.etCoverSource.text?.trim().toString()
 
         // Reset helper text
+        binding.tilCoverSource.helperText = ""
         binding.tilAudioFile.helperText = ""
 
         // Validation
-        if (binding.addCoverContainer.isVisible) {
+        if (binding.rbAddCover.isSelected) {
             if (viewModel.coverImageFile == null) {
                 snackBarWarning(
                     binding.root,
@@ -198,7 +345,7 @@ class MediaFragment : Fragment() {
             }
         }
 
-        if (binding.audioFileContainer.isVisible) {
+        if (binding.rbAudioFile.isSelected || binding.rbRecordAudio.isSelected) {
             if (viewModel.audioFile == null) {
                 binding.tilAudioFile.apply {
                     helperText = getString(R.string.helper_empty_audio_file)
@@ -207,9 +354,6 @@ class MediaFragment : Fragment() {
                 return
             }
         }
-
-        // TODO : Validate audio recorder
-
 
         // Set media data
         viewModel.coverSource = coverSource.ifBlank { null }
@@ -223,10 +367,62 @@ class MediaFragment : Fragment() {
                 viewModel.createSubmission()
             }
             .setNegativeButton(R.string.answer_no) { _, _ ->
-                // Do nothing
+                activity?.finish()
             }
             .setNeutralButton(R.string.answer_cancel) { _, _ ->
                 // Do nothing
             }.show()
+    }
+
+    private fun observeSubmission(event: SubmissionEvent) {
+        when (event) {
+            is SubmissionEvent.Success -> {
+                loadingDialog.dismiss()
+                Helpers.snackBarSuccess(
+                    binding.root,
+                    getString(R.string.success_add_submission),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                Timer().schedule(1000L) {
+                    activity?.finish()
+                }
+            }
+            is SubmissionEvent.Error -> {
+                loadingDialog.dismiss()
+                Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
+            }
+            is SubmissionEvent.NetworkError -> {
+                loadingDialog.dismiss()
+                Helpers.snackBarError(
+                    binding.root,
+                    getString(R.string.error_default_network_error),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            is SubmissionEvent.Loading -> {
+                if (!loadingDialog.isAdded) {
+                    loadingDialog.show(
+                        parentFragmentManager,
+                        LoadingDialogFragment::class.java.simpleName
+                    )
+                }
+            }
+        }
+    }
+
+    private fun recorderStateStart() {
+        // Update recorder state
+        isRecording = true
+
+        // Update button state
+        binding.btnRecord.setImageResource(R.drawable.ic_stop)
+    }
+
+    private fun recorderStateStop() {
+        // Update recorder state
+        isRecording = false
+
+        // Update button state
+        binding.btnRecord.setImageResource(R.drawable.ic_record)
     }
 }
