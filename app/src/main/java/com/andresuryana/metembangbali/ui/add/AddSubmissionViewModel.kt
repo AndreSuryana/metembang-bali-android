@@ -61,7 +61,7 @@ class AddSubmissionViewModel @Inject constructor(
     var subCategory: SubCategory? = null
     var lyrics: ArrayList<String>? = null
     var usageType: UsageType? = null
-    var usage: Usage? = null
+    var hasUsages: ArrayList<Usage>? = null
     var mood: Mood? = null
     var rule: Rule? = null
     var meaning: String? = null
@@ -83,7 +83,7 @@ class AddSubmissionViewModel @Inject constructor(
                 subCategory,
                 lyrics,
                 usageType,
-                usages = null /* TODO : Update usage (one item) to usages (more than one item) */,
+                hasUsages,
                 mood,
                 rule,
                 meaning,
