@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class Rule(
 
     @SerializedName("id")
-    val id: String,
+    val id: String?,
 
     @SerializedName("name")
     val name: String?,
