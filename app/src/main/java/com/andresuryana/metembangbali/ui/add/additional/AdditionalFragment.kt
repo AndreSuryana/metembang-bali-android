@@ -17,6 +17,7 @@ import com.andresuryana.metembangbali.adapter.viewpager.AddSubmissionViewPagerAd
 import com.andresuryana.metembangbali.databinding.FragmentAdditionalBinding
 import com.andresuryana.metembangbali.helper.Helpers
 import com.andresuryana.metembangbali.ui.add.AddSubmissionViewModel
+import com.andresuryana.metembangbali.ui.add.additional.rule.RuleBottomSheetDialog
 import com.andresuryana.metembangbali.utils.event.MoodEvent
 import com.andresuryana.metembangbali.utils.event.RuleEvent
 import com.andresuryana.metembangbali.utils.event.UsageEvent
@@ -43,6 +44,9 @@ class AdditionalFragment : Fragment() {
     private lateinit var moodAdapter: MoodStringAdapter
     private lateinit var ruleAdapter: RuleStringAdapter
 
+    // Bottom sheet dialog
+    private val ruleDialog = RuleBottomSheetDialog()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,6 +63,23 @@ class AdditionalFragment : Fragment() {
             addLyricsInput()
         }
 
+        // Get dropdown values
+        viewModel.getUsageTypes()
+        viewModel.getMoods()
+        viewModel.getRules()
+
+        // Setup button listener
+        setupButtonListener()
+
+        // Setup bottom sheet dialog
+        setupBottomSheetDialog()
+
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         // Observe usage types
         viewModel.usageTypes.observe(viewLifecycleOwner, this::usageTypesObserver)
 
@@ -70,21 +91,6 @@ class AdditionalFragment : Fragment() {
 
         // Observe rules
         viewModel.rules.observe(viewLifecycleOwner, this::rulesObserver)
-
-        // Setup button listener
-        setupButtonListener()
-
-        // TODO : Implement add usage & implement add rule
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.getUsageTypes()
-        viewModel.getMoods()
-        viewModel.getRules()
     }
 
     override fun onDestroy() {
@@ -97,13 +103,13 @@ class AdditionalFragment : Fragment() {
         binding.acUsageType.setOnItemClickListener { _, _, position, _ ->
             viewModel.usageType = usageTypeAdapter.getItem(position)
             viewModel.getUsages(viewModel.usageType?.id)
-            viewModel.usage = null
+            viewModel.hasUsages?.clear() /* Temporary */
             binding.acUsage.setText("")
         }
 
         // Usage dropdown listener
         binding.acUsage.setOnItemClickListener { _, _, position, _ ->
-            viewModel.usage = usageAdapter.getItem(position)
+            viewModel.hasUsages?.add(0, usageAdapter.getItem(position))
         }
 
         // Sub category dropdown listener
@@ -126,6 +132,25 @@ class AdditionalFragment : Fragment() {
         // Button next listener
         binding.btnNext.setOnClickListener {
             onNext()
+        }
+
+        // Button add rule listener
+        binding.btnAddRule.setOnClickListener {
+            ruleDialog.show(parentFragmentManager, RuleBottomSheetDialog::class.java.simpleName)
+        }
+    }
+
+    private fun setupBottomSheetDialog() {
+        // Rule bottom sheet dialog
+        ruleDialog.setOnResultCallbackListener {
+            // Add to current rule dropdown
+            ruleAdapter.add(it)
+
+            // Set selected dropdown
+            binding.acRule.setText(it.toString())
+
+            // Set current rule
+            viewModel.rule = it
         }
     }
 
@@ -283,7 +308,7 @@ class AdditionalFragment : Fragment() {
         }
 
         // Validation
-        if (binding.tilUsage.isVisible && viewModel.usage == null) {
+        if (binding.tilUsage.isVisible && viewModel.hasUsages?.isEmpty() == true) {
             binding.tilUsage.apply {
                 helperText = getString(R.string.helper_empty_usage)
                 requestFocus()
@@ -293,7 +318,7 @@ class AdditionalFragment : Fragment() {
 
         Log.d(
             "AdditionalFragment",
-            "onNext: usageType=${viewModel.usageType}, usage=${viewModel.usage}, mood=${viewModel.mood}, rule=${viewModel.rule}, meaning=$meaning, lyricsIDN=$lyricsIDN"
+            "onNext: usageType=${viewModel.usageType}, usage=${viewModel.hasUsages}, mood=${viewModel.mood}, rule=${viewModel.rule}, meaning=$meaning, lyricsIDN=$lyricsIDN"
         )
 
         // Set additional data
