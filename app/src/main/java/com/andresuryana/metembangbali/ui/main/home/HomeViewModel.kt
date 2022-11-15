@@ -9,7 +9,6 @@ import com.andresuryana.metembangbali.utils.Resource
 import com.andresuryana.metembangbali.utils.event.TembangListEvent
 import com.andresuryana.metembangbali.utils.event.UserEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
