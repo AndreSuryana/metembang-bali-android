@@ -8,5 +8,4 @@
     android:focusable="true"
     android:fontFamily="@font/corbel"
     android:padding="12dp"
-    android:text="Show lyrics"
     android:textColor="@color/black" />
