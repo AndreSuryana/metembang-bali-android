@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/corbel_bold"
-        android:text="Belum ada hasil tembang"
+        android:text="@string/empty_result_default"
         android:textAlignment="center"
         android:textColor="@color/color_secondary"
         android:textSize="16sp"
