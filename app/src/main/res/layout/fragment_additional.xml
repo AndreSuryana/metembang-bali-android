@@ -150,6 +150,39 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/corbel"
+                android:paddingVertical="8dp"
+                android:text="@string/prompt_add_rule"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_rule"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/btn_add_rule"
+                android:textAllCaps="false"
+                android:textSize="11sp"
+                app:cornerRadius="24dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/label_meaning"
             android:layout_width="match_parent"
