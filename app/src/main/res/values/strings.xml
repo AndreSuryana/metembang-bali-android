@@ -16,6 +16,7 @@
     <string name="title_general">Umum</string>
     <string name="title_additional">Tambahan</string>
     <string name="title_media">Media</string>
+    <string name="title_add_rule">Tambah Aturan</string>
 
     <!-- Heading -->
     <string name="heading_get_started">Introducing Metembang Bali</string>
@@ -32,6 +33,9 @@
     <string name="description_get_started">Metembang Bali adalah aplikasi berbasis mobile untuk mengenal Tembang Bali.</string>
     <string name="description_search_result" tools:ignore="PluralsCandidate">%d tembang ditemukan</string>
     <string name="description_label_lyrics">Lirik tembang dituliskan per-baris</string>
+    <string name="description_guru_gatra">Jumlah baris dalam satu bait (pada)</string>
+    <string name="description_guru_wilang">Jumlah suku kata dalam satu baris (satu gatra)</string>
+    <string name="description_guru_dingdong">suara akhir pada setiap baris (a,i,u,e,o)</string>
 
     <!-- Menu Item -->
     <string name="menu_submission">Submission</string>
@@ -85,6 +89,10 @@
     <string name="label_lyrics_idn">Lirik (Indonesia)</string>
     <string name="label_cover">Cover</string>
     <string name="label_audio">Audio</string>
+    <string name="label_rule_name">Nama Aturan</string>
+    <string name="label_guru_gatra">Guru Gatra</string>
+    <string name="label_guru_wilang">Guru Wilang</string>
+    <string name="label_guru_dingdong">Guru Dingdong</string>
 
     <!-- Input Hint -->
     <string name="hint_email">email@example.com</string>
@@ -104,6 +112,10 @@
     <string name="hint_meaning">makna tembang</string>
     <string name="hint_cover_source">contoh: google.com</string>
     <string name="hint_audio_file">file audio (mp3/wav)</string>
+    <string name="hint_rule_name">nama aturan</string>
+    <string name="hint_guru_gatra">contoh: 5</string>
+    <string name="hint_guru_wilang">contoh: 1, 2, 3, 4, 5</string>
+    <string name="hint_guru_dingdong">contoh: a, i, u, e, o</string>
 
     <!-- Input Helper -->
     <string name="helper_empty_email">Email tidak boleh kosong</string>
@@ -122,6 +134,12 @@
     <string name="helper_empty_usage">Mohon pilih kegunaan tembang</string>
     <string name="helper_empty_audio_file">File audio tidak boleh kosong</string>
     <string name="helper_empty_cover_source">Sumber cover tidak boleh kosong</string>
+    <string name="helper_empty_rule_name">Nama aturan tidak boleh kosong</string>
+    <string name="helper_empty_guru_gatra">Guru gatra tidak boleh kosong</string>
+    <string name="helper_empty_guru_wilang">Guru wilang tidak boleh kosong</string>
+    <string name="helper_empty_guru_dingdong">Guru dingdong tidak boleh kosong</string>
+    <string name="helper_guru_wilang_not_match">Jumlah guru wilang %d tidak sesuai dengan jumlah guru gatra %d</string>
+    <string name="helper_guru_dingdong_not_match">Jumlah guru dingdong %d tidak sesuai dengan jumlah guru gatra %d</string>
 
     <!-- Button -->
     <string name="btn_get_started">Get Started</string>
@@ -135,6 +153,7 @@
     <string name="btn_prev">Sebelumnya</string>
     <string name="btn_next">Selanjutnya</string>
     <string name="btn_finish">Selesai</string>
+    <string name="btn_add_rule">Tambah Aturan</string>
 
     <!-- Radio Button -->
     <string name="rb_no_cover">Jangan isi cover</string>
@@ -151,6 +170,7 @@
     <string name="prompt_delete_submission">Apakah Anda yakin ingin menghapus submission ini?</string>
     <string name="prompt_choose_image_source">Pilih sumber file gambar</string>
     <string name="prompt_add_submission">Apakah Anda yakin ingin menambahkan submission ini?</string>
+    <string name="prompt_add_rule">Tidak menemukan aturan yang cocok?</string>
 
     <!-- Transition Name -->
     <string name="trans_logo">transition_logo</string>
@@ -168,5 +188,6 @@
     <string name="answer_yes">Ya</string>
     <string name="answer_no">Tidak</string>
     <string name="answer_cancel">Batal</string>
+    <string name="empty_result_default">Belum ada hasil tembang</string>
 
 </resources>
