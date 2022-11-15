@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/top_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="12dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_arrow_top"
+                android:tint="@color/color_text_secondary" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/corbel_bold"
+                android:text="@string/title_add_rule"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="24dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_rule_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/corbel_bold"
+            android:text="@string/label_rule_name"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/top_navigation" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_rule_name"
+            style="@style/MyTextInputLayout_NoHorizontalPadding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@+id/label_rule_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_rule_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:hint="@string/hint_rule_name"
+                android:inputType="textNoSuggestions"
+                android:labelFor="@id/til_email"
+                android:paddingHorizontal="0dp"
+                android:paddingVertical="12dp"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_guru_gatra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/corbel_bold"
+            android:text="@string/label_guru_gatra"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/top_navigation" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_guru_gatra"
+            style="@style/MyTextInputLayout_NoHorizontalPadding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@+id/label_guru_gatra">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_guru_gatra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:hint="@string/hint_guru_gatra"
+                android:inputType="number"
+                android:labelFor="@id/til_email"
+                android:paddingHorizontal="0dp"
+                android:paddingVertical="12dp"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_guru_wilang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/corbel_bold"
+            android:text="@string/label_guru_wilang"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/top_navigation" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_guru_wilang"
+            style="@style/MyTextInputLayout_NoHorizontalPadding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@+id/label_guru_wilang">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_guru_wilang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:hint="@string/hint_guru_wilang"
+                android:inputType="textNoSuggestions"
+                android:labelFor="@id/til_email"
+                android:paddingHorizontal="0dp"
+                android:paddingVertical="12dp"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_guru_dingdong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/corbel_bold"
+            android:text="@string/label_guru_dingdong"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/top_navigation" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_guru_dingdong"
+            style="@style/MyTextInputLayout_NoHorizontalPadding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@+id/label_guru_dingdong">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_guru_dingdong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:hint="@string/hint_guru_dingdong"
+                android:inputType="textNoSuggestions"
+                android:labelFor="@id/til_email"
+                android:paddingHorizontal="0dp"
+                android:paddingVertical="12dp"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_rule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/corbel_bold"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:padding="16dp"
+            android:text="@string/btn_add_rule"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cornerRadius="24dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
