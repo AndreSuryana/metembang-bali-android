@@ -231,7 +231,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 usagesJsonArray.put(usageJson)
             }
 
-            requestBody["usages"] = usagesJsonArray.toString().toRequestBody(contentType)
+            requestBody["usages"] = Gson().toJson(usagesJsonArray).toRequestBody(contentType)
         }
 
         if (mood != null)
@@ -240,12 +240,12 @@ class MetembangRepositoryImpl @Inject constructor(
         if (rule != null) {
             // Create rule json
             val ruleJson = HashMap<String, String>()
-            ruleJson["name"] = title.toString()
+            ruleJson["name"] = rule.id ?: title.toString()
             ruleJson["guru_dingdong"] = rule.guruDingdong
             ruleJson["guru_wilang"] = rule.guruWilang
             ruleJson["guru_gatra"] = rule.guruGatra.toString()
 
-            requestBody["rule"] = ruleJson.toString().toRequestBody(contentType)
+            requestBody["rule"] = Gson().toJson(ruleJson).toRequestBody(contentType)
         }
 
         if (meaning != null)
