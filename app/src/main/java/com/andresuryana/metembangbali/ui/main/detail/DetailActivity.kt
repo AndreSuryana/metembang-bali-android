@@ -349,7 +349,7 @@ class DetailActivity : AppCompatActivity() {
                 // Set tembang data detail info
                 binding.detailContainer.apply {
                     tvAuthor.text = event.tembang.author ?: ("-")
-                    tvCategory.text = event.tembang.category
+                    tvCategoryInfo.text = event.tembang.category
                     tvSubCategory.text = event.tembang.subCategory ?: ("-")
                     tvMood.text = if (event.tembang.mood != null) event.tembang.mood.toString() else "-"
                     tvMeaning.text = event.tembang.meaning ?: ("-")
