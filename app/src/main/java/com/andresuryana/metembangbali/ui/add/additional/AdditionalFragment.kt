@@ -5,23 +5,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.andresuryana.metembangbali.R
+import com.andresuryana.metembangbali.adapter.UsageAdapter
 import com.andresuryana.metembangbali.adapter.dropdown.MoodStringAdapter
 import com.andresuryana.metembangbali.adapter.dropdown.RuleStringAdapter
-import com.andresuryana.metembangbali.adapter.dropdown.UsageStringAdapter
-import com.andresuryana.metembangbali.adapter.dropdown.UsageTypeStringAdapter
 import com.andresuryana.metembangbali.adapter.viewpager.AddSubmissionViewPagerAdapter.Companion.MEDIA
 import com.andresuryana.metembangbali.databinding.FragmentAdditionalBinding
 import com.andresuryana.metembangbali.helper.Helpers
 import com.andresuryana.metembangbali.ui.add.AddSubmissionViewModel
 import com.andresuryana.metembangbali.ui.add.additional.rule.RuleBottomSheetDialog
+import com.andresuryana.metembangbali.ui.add.additional.usage.UsageBottomSheetDialog
 import com.andresuryana.metembangbali.utils.event.MoodEvent
 import com.andresuryana.metembangbali.utils.event.RuleEvent
-import com.andresuryana.metembangbali.utils.event.UsageEvent
-import com.andresuryana.metembangbali.utils.event.UsageTypeEvent
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,13 +38,15 @@ class AdditionalFragment : Fragment() {
     })
 
     // Array adapter
-    private lateinit var usageTypeAdapter: UsageTypeStringAdapter
-    private lateinit var usageAdapter: UsageStringAdapter
     private lateinit var moodAdapter: MoodStringAdapter
     private lateinit var ruleAdapter: RuleStringAdapter
 
+    // Recycler adapter
+    private val usageAdapter = UsageAdapter()
+
     // Bottom sheet dialog
     private val ruleDialog = RuleBottomSheetDialog()
+    private val usageDialog = UsageBottomSheetDialog()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,6 +58,13 @@ class AdditionalFragment : Fragment() {
 
         // Setup dropdown input
         setupDropdown()
+
+        // Setup usage recycler view
+        binding.rvUsages.apply {
+            isScrollContainer = false
+            layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
+            adapter = usageAdapter
+        }
 
         // Init lyrics input
         if (binding.lyricsInputContainer.childCount <= 0) {
@@ -80,12 +88,6 @@ class AdditionalFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        // Observe usage types
-        viewModel.usageTypes.observe(viewLifecycleOwner, this::usageTypesObserver)
-
-        // Observe usages
-        viewModel.usages.observe(viewLifecycleOwner, this::usagesObserver)
-
         // Observe moods
         viewModel.moods.observe(viewLifecycleOwner, this::moodsObserver)
 
@@ -99,19 +101,6 @@ class AdditionalFragment : Fragment() {
     }
 
     private fun setupDropdown() {
-        // Usage type dropdown listener
-        binding.acUsageType.setOnItemClickListener { _, _, position, _ ->
-            viewModel.usageType = usageTypeAdapter.getItem(position)
-            viewModel.getUsages(viewModel.usageType?.id)
-            viewModel.hasUsages?.clear() /* Temporary */
-            binding.acUsage.setText("")
-        }
-
-        // Usage dropdown listener
-        binding.acUsage.setOnItemClickListener { _, _, position, _ ->
-            viewModel.hasUsages?.add(0, usageAdapter.getItem(position))
-        }
-
         // Sub category dropdown listener
         binding.acMood.setOnItemClickListener { _, _, position, _ ->
             viewModel.mood = moodAdapter.getItem(position)
@@ -138,6 +127,11 @@ class AdditionalFragment : Fragment() {
         binding.btnAddRule.setOnClickListener {
             ruleDialog.show(parentFragmentManager, RuleBottomSheetDialog::class.java.simpleName)
         }
+
+        // Button add usage listener
+        binding.btnAddUsage.setOnClickListener {
+            usageDialog.show(parentFragmentManager, UsageBottomSheetDialog::class.java.simpleName)
+        }
     }
 
     private fun setupBottomSheetDialog() {
@@ -151,6 +145,12 @@ class AdditionalFragment : Fragment() {
 
             // Set current rule
             viewModel.rule = it
+        }
+
+        // Usage bottom sheet dialog
+        usageDialog.setOnResultCallbackListener {
+            // Add to usage list
+            usageAdapter.addItem(it)
         }
     }
 
@@ -192,59 +192,6 @@ class AdditionalFragment : Fragment() {
         }
 
         return lyrics
-    }
-
-    private fun usageTypesObserver(event: UsageTypeEvent) {
-        when (event) {
-            is UsageTypeEvent.Success -> {
-                usageTypeAdapter = UsageTypeStringAdapter(
-                    requireContext(),
-                    R.layout.item_dropdown,
-                    event.usageTypes
-                )
-                binding.acUsageType.setAdapter(usageTypeAdapter)
-            }
-            is UsageTypeEvent.Error -> {
-                Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
-            }
-            is UsageTypeEvent.NetworkError -> {
-                Helpers.snackBarError(
-                    binding.root,
-                    getString(R.string.error_default_network_error),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-            is UsageTypeEvent.Loading -> {}
-            is UsageTypeEvent.Empty -> {}
-        }
-    }
-
-    private fun usagesObserver(event: UsageEvent) {
-        when (event) {
-            is UsageEvent.Success -> {
-                usageAdapter = UsageStringAdapter(
-                    requireContext(),
-                    R.layout.item_dropdown,
-                    event.usages
-                )
-                binding.acUsage.setAdapter(usageAdapter)
-                setUsageVisibility(View.VISIBLE)
-            }
-            is UsageEvent.Error -> {
-                Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
-            }
-            is UsageEvent.NetworkError -> {
-                Helpers.snackBarError(
-                    binding.root,
-                    getString(R.string.error_default_network_error),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-            is UsageEvent.Loading -> {}
-            is UsageEvent.Empty -> {
-                setUsageVisibility(View.GONE)
-            }
-        }
     }
 
     private fun moodsObserver(event: MoodEvent) {
@@ -301,36 +248,22 @@ class AdditionalFragment : Fragment() {
         // Get value
         val meaning = binding.etMeaning.text?.trim().toString()
         val lyricsIDN = getLyricsList()
-
-        // Reset helper text
-        binding.apply {
-            tilUsage.helperText = ""
-        }
-
-        // Validation
-        if (binding.tilUsage.isVisible && viewModel.hasUsages?.isEmpty() == true) {
-            binding.tilUsage.apply {
-                helperText = getString(R.string.helper_empty_usage)
-                requestFocus()
-            }
-            return
-        }
-
-        Log.d(
-            "AdditionalFragment",
-            "onNext: usageType=${viewModel.usageType}, usage=${viewModel.hasUsages}, mood=${viewModel.mood}, rule=${viewModel.rule}, meaning=$meaning, lyricsIDN=$lyricsIDN"
-        )
+        val usages = usageAdapter.getAllItem()
 
         // Set additional data
         viewModel.meaning = meaning
         viewModel.lyricsIDN = lyricsIDN
+        if (usages.isNotEmpty()) {
+            viewModel.hasUsages.clear()
+            viewModel.hasUsages.addAll(usages)
+        }
+
+        Log.d(
+            "AdditionalFragment",
+            "onNext: usage=${usages}, mood=${viewModel.mood}, rule=${viewModel.rule}, meaning=${viewModel.meaning}, lyricsIDN=${viewModel.lyricsIDN}"
+        )
 
         // Set next page position
         viewModel.setPagePosition(MEDIA)
-    }
-
-    private fun setUsageVisibility(visibility: Int) {
-        binding.labelUsage.visibility = visibility
-        binding.tilUsage.visibility = visibility
     }
 }
