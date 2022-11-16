@@ -117,4 +117,11 @@ object Ext {
             null
         }
     }
+
+    fun String.capitalizeEachWord(): String? {
+        return if (this.isEmpty()) null
+        else this.trim().split("\\s+".toRegex()).map { str ->
+            str.replaceFirstChar { it.uppercase() }
+        }.joinToString(" ")
+    }
 }
