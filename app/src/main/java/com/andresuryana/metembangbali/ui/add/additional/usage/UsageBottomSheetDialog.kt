@@ -2,6 +2,7 @@ package com.andresuryana.metembangbali.ui.add.additional.usage
 
 import android.content.DialogInterface
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -101,6 +102,9 @@ class UsageBottomSheetDialog : BottomSheetDialogFragment() {
         // Setup sheet behaviour
         BottomSheetBehavior.from(view.parent as View)
             .state = BottomSheetBehavior.STATE_EXPANDED
+
+        // Set minimum height to parent view height
+        binding.root.minHeight = Resources.getSystem().displayMetrics.heightPixels
     }
 
     fun setOnResultCallbackListener(onResultCallback: (usage: Usage) -> Unit) {
