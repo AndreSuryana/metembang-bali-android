@@ -29,7 +29,7 @@ class ChangePasswordViewModel @Inject constructor(
             when (val response =
                 repository.changePassword(oldPassword, newPassword, confirmPassword)) {
                 is Resource.Success ->
-                    _changePassword.emit(ChangePasswordEvent.Success(response.data))
+                    _changePassword.emit(ChangePasswordEvent.Success)
                 is Resource.Error ->
                     _changePassword.emit(ChangePasswordEvent.Error(response.message!!))
                 is Resource.NetworkError ->

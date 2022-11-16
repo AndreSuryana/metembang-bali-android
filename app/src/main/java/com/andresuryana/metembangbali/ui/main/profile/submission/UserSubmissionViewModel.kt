@@ -44,7 +44,7 @@ class UserSubmissionViewModel @Inject constructor(
             _deleteSubmission.emit(DeleteSubmissionEvent.Loading)
             when (val response = repository.deleteUserSubmission(id)) {
                 is Resource.Success ->
-                    _deleteSubmission.emit(DeleteSubmissionEvent.Success(response.data))
+                    _deleteSubmission.emit(DeleteSubmissionEvent.Success)
                 is Resource.Error ->
                     _deleteSubmission.emit(DeleteSubmissionEvent.Error(response.message!!))
                 is Resource.NetworkError ->

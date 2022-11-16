@@ -44,7 +44,7 @@ class ProfileViewModel @Inject constructor(
             _signOut.emit(SignOutEvent.Loading)
             when (val response = repository.signOut()) {
                 is Resource.Success ->
-                    _signOut.emit(SignOutEvent.Success(response.data))
+                    _signOut.emit(SignOutEvent.Success)
                 is Resource.Error ->
                     _signOut.emit(SignOutEvent.Error(response.message!!))
                 is Resource.NetworkError ->
