@@ -120,8 +120,8 @@ object Ext {
 
     fun String.capitalizeEachWord(): String? {
         return if (this.isEmpty()) null
-        else this.trim().split("\\s+".toRegex()).map { str ->
+        else this.trim().split("\\s+".toRegex()).joinToString(" ") { str ->
             str.replaceFirstChar { it.uppercase() }
-        }.joinToString(" ")
+        }
     }
 }
