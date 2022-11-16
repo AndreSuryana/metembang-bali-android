@@ -10,7 +10,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
-import org.json.JSONArray
 import retrofit2.HttpException
 import java.io.File
 import java.io.IOException
@@ -222,12 +221,12 @@ class MetembangRepositoryImpl @Inject constructor(
         // Additional data request body
         if (usages?.isNotEmpty() == true) {
             // Create usages json array
-            val usagesJsonArray = JSONArray()
+            val usagesJsonArray = ArrayList<HashMap<String, String>>()
             usages.forEach {
                 val usageJson = HashMap<String, String>()
-                usageJson["type"] = it.typeId
-                usageJson["activity"] = it.activity
-                usagesJsonArray.put(usageJson)
+                usageJson["type"] = it.typeId.toString()
+                usageJson["activity"] = it.activity.toString()
+                usagesJsonArray.add(usageJson)
             }
 
             requestBody["usages"] = Gson().toJson(usagesJsonArray).toRequestBody(contentType)
