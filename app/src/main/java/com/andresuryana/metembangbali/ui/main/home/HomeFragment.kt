@@ -15,6 +15,7 @@ import com.andresuryana.metembangbali.adapter.MostViewAdapter
 import com.andresuryana.metembangbali.data.model.Tembang
 import com.andresuryana.metembangbali.databinding.FragmentHomeBinding
 import com.andresuryana.metembangbali.helper.Helpers
+import com.andresuryana.metembangbali.helper.Helpers.checkErrorState
 import com.andresuryana.metembangbali.ui.main.detail.DetailActivity
 import com.andresuryana.metembangbali.utils.Constants.REGISTERED_USER
 import com.andresuryana.metembangbali.utils.SessionManager
@@ -112,6 +113,7 @@ class HomeFragment : Fragment() {
                     .into(binding.ivProfileAvatar)
             }
             is UserEvent.Error -> {
+                checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is UserEvent.NetworkError -> {

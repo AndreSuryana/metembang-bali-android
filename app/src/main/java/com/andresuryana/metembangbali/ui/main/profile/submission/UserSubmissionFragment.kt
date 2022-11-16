@@ -16,6 +16,7 @@ import com.andresuryana.metembangbali.data.model.Submission
 import com.andresuryana.metembangbali.databinding.FragmentUserSubmissionBinding
 import com.andresuryana.metembangbali.dialog.LoadingDialogFragment
 import com.andresuryana.metembangbali.helper.Helpers
+import com.andresuryana.metembangbali.helper.Helpers.checkErrorState
 import com.andresuryana.metembangbali.ui.add.AddSubmissionActivity
 import com.andresuryana.metembangbali.ui.main.detail.DetailActivity
 import com.andresuryana.metembangbali.utils.SubmissionStatusConstants.STATUS_ACCEPTED
@@ -150,6 +151,7 @@ class UserSubmissionFragment : Fragment() {
             }
             is SubmissionListEvent.Error -> {
                 loadingDialog.dismiss()
+                checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is SubmissionListEvent.NetworkError -> {
@@ -191,6 +193,7 @@ class UserSubmissionFragment : Fragment() {
             }
             is DeleteSubmissionEvent.Error -> {
                 loadingDialog.dismiss()
+                checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is DeleteSubmissionEvent.NetworkError -> {

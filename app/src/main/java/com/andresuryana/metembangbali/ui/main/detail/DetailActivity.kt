@@ -357,7 +357,7 @@ class DetailActivity : AppCompatActivity() {
                     tvRule.text = if (event.tembang.rule != null) event.tembang.rule.toString() else "-"
                     tvUsage.text = if (event.tembang.usage?.isNotEmpty() == true) {
                         event.tembang.usage.joinToString {
-                            it.activity
+                            it.activity.toString()
                         }
                     } else "-"
                     tvDateCreated.text = formatDate(event.tembang.createdAt) ?: ("-")

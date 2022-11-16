@@ -1,17 +1,21 @@
 package com.andresuryana.metembangbali.helper
 
+import android.content.Intent
 import android.graphics.Color
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.andresuryana.metembangbali.R
 import com.andresuryana.metembangbali.data.model.Submission
 import com.andresuryana.metembangbali.data.model.Tembang
+import com.andresuryana.metembangbali.ui.auth.signin.SignInActivity
+import com.andresuryana.metembangbali.utils.ErrorStateConstants.UNAUTHORIZED
 import com.andresuryana.metembangbali.utils.Ext.spaceCamelCase
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.concurrent.schedule
 
 
 object Helpers {
@@ -76,5 +80,19 @@ object Helpers {
     fun generateFilename(prefix: String, extension: String): String {
         val formatted = SimpleDateFormat("yyyyMMdd_hhmmss", Locale.getDefault()).format(Date())
         return "/${prefix}_${formatted}.${extension}"
+    }
+
+    fun checkErrorState(view: View, error: String) {
+        when (error.lowercase()) {
+            UNAUTHORIZED -> {
+                snackBarError(view, error).show()
+                Timer().schedule(1500L) {
+                    Intent(view.context, SignInActivity::class.java).also {
+                        it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        view.context.startActivity(it)
+                    }
+                }
+            }
+        }
     }
 }

@@ -123,6 +123,7 @@ class ChangePasswordActivity : AppCompatActivity() {
             }
             is ChangePasswordEvent.Error -> {
                 loadingDialog.dismiss()
+                Helpers.checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is ChangePasswordEvent.NetworkError -> {

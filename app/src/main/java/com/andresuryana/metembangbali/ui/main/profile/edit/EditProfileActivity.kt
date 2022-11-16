@@ -72,6 +72,7 @@ class EditProfileActivity : AppCompatActivity() {
                 binding.etAddress.setText(event.user.address)
             }
             is UserEvent.Error -> {
+                Helpers.checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is UserEvent.NetworkError -> {
@@ -102,6 +103,7 @@ class EditProfileActivity : AppCompatActivity() {
             }
             is UserEvent.Error -> {
                 loadingDialog.dismiss()
+                Helpers.checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is UserEvent.NetworkError -> {

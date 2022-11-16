@@ -13,6 +13,7 @@ import com.andresuryana.metembangbali.R
 import com.andresuryana.metembangbali.databinding.FragmentProfileBinding
 import com.andresuryana.metembangbali.dialog.LoadingDialogFragment
 import com.andresuryana.metembangbali.helper.Helpers
+import com.andresuryana.metembangbali.helper.Helpers.checkErrorState
 import com.andresuryana.metembangbali.ui.auth.signin.SignInActivity
 import com.andresuryana.metembangbali.ui.main.profile.edit.EditProfileActivity
 import com.andresuryana.metembangbali.ui.main.profile.password.ChangePasswordActivity
@@ -174,6 +175,7 @@ class ProfileFragment : Fragment() {
                 binding.tvProfileName.text = event.user.name
             }
             is UserEvent.Error -> {
+                checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
 
                 // Update ui state
