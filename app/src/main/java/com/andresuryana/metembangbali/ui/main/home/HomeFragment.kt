@@ -2,7 +2,6 @@ package com.andresuryana.metembangbali.ui.main.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import com.andresuryana.metembangbali.databinding.FragmentHomeBinding
 import com.andresuryana.metembangbali.helper.Helpers
 import com.andresuryana.metembangbali.helper.Helpers.checkErrorState
 import com.andresuryana.metembangbali.ui.main.detail.DetailActivity
+import com.andresuryana.metembangbali.ui.main.setting.SettingActivity
 import com.andresuryana.metembangbali.utils.Constants.REGISTERED_USER
 import com.andresuryana.metembangbali.utils.SessionManager
 import com.andresuryana.metembangbali.utils.event.TembangListEvent
@@ -65,7 +65,12 @@ class HomeFragment : Fragment() {
         viewModel.latest.observe(viewLifecycleOwner, this::latestObserver)
         viewModel.topMostViewed.observe(viewLifecycleOwner, this::topMostViewedObserver)
 
-        Log.d("User", "role: ${SessionManager(requireContext()).getAuthStatus()}")
+        // Setup button listener
+        binding.btnSetting.setOnClickListener {
+            Intent(activity, SettingActivity::class.java).also {
+                startActivity(it)
+            }
+        }
 
         return binding.root
     }

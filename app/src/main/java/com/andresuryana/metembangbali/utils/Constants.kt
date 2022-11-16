@@ -7,6 +7,7 @@ object Constants {
     const val USER_TOKEN_KEY = "user_token"
     const val USER_ROLE = "user_role"
     const val APP_START_METHOD = "app_start_method"
+    const val APP_FONT = "app_font"
 
     // User role constants
     const val REGISTERED_USER = "registered_user"

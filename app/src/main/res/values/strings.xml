@@ -1,6 +1,8 @@
 <resources>
     <!-- App Name -->
     <string name="app_name">Metembang Bali</string>
+    <string name="app_about">Metembang Bali adalah aplikasi berbasis mobile untuk mengenal Tembang Bali. Metembang Bali menggunakan teknologi Ontologi sebagai sistem penyimpanan data dan diproses menggunakan SPARQL Query dengan bantuan Apache Jena Fuseki Server.</string>
+    <string name="app_copyright">Copyright &#169; Metembang Bali 2022</string>
 
     <!-- Title -->
     <string name="title_home">Beranda</string>
@@ -18,6 +20,7 @@
     <string name="title_media">Media</string>
     <string name="title_add_rule">Tambah Aturan</string>
     <string name="title_add_usage">Tambah Kegunaan</string>
+    <string name="title_setting">Pengaturan</string>
 
     <!-- Heading -->
     <string name="heading_get_started">Introducing Metembang Bali</string>
@@ -28,6 +31,8 @@
     <string name="heading_tembang">Tembang</string>
     <string name="heading_account">Akun</string>
     <string name="heading_delete_submission">Hapus submission</string>
+    <string name="heading_display">Tampilan</string>
+    <string name="heading_about_app">Tentang Aplikasi</string>
 
     <!-- Description -->
     <string name="description_get_started">Metembang Bali adalah aplikasi berbasis mobile untuk mengenal Tembang Bali.</string>
@@ -43,12 +48,14 @@
     <string name="menu_lyrics_hide">Sembunyikan lirik</string>
     <string name="menu_info_detail_show">Tampilkan info detail</string>
     <string name="menu_info_detail_hide">Sembunyikan info detail</string>
+    <string name="menu_setting_font_size">Ukuran Font</string>
 
     <!-- Success Message -->
     <string name="success_edit_profile">Profil telah berhasil diperbarui</string>
     <string name="success_change_password">Password telah berhasil diperbarui</string>
     <string name="success_delete_submission">Submission berhasil dihapus</string>
     <string name="success_add_submission">Submission berhasil dikirim</string>
+    <string name="success_change_font_size">Ukuran font berhasil diperbarui</string>
 
     <!-- Error Message -->
     <string name="error_default_network_error">Something went wrong!</string>
@@ -174,6 +181,16 @@
     <string name="trans_input_email">transition_input_email</string>
     <string name="trans_input_password">transition_input_password</string>
     <string name="trans_primary_button">transition_primary_button</string>
+
+    <!-- Font Size List -->
+    <string name="font_size_small">Kecil</string>
+    <string name="font_size_normal">Normal</string>
+    <string name="font_size_large">Besar</string>
+    <string-array name="font_size_list">
+        <item>@string/font_size_small</item>
+        <item>@string/font_size_normal</item>
+        <item>@string/font_size_large</item>
+    </string-array>
 
     <!-- Other -->
     <string name="or">or</string>

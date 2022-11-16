@@ -2,22 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.andresuryana.metembangbali">
-
     <!-- Permissions for networking -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!-- Permission for using camera feature -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permission for using camera feature -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true" />
-
-    <!-- Wake lock permission -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- Record permission -->
+        android:required="true" /> <!-- Wake lock permission -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Record permission -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
@@ -31,6 +24,13 @@
         android:theme="@style/Theme.MetembangBali"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.main.setting.SettingActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ui.add.AddSubmissionActivity"
             android:exported="false">
