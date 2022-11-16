@@ -196,7 +196,6 @@ class MetembangRepositoryImpl @Inject constructor(
         category: Category?,
         subCategory: SubCategory?,
         lyrics: ArrayList<String>?,
-        usageType: UsageType?,
         usages: ArrayList<Usage>?,
         mood: Mood?,
         rule: Rule?,

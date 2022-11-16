@@ -67,7 +67,6 @@ interface MetembangRepository {
         category: Category? = null,
         subCategory: SubCategory? = null,
         lyrics: ArrayList<String>? = null,
-        usageType: UsageType? = null,
         usages: ArrayList<Usage>? = null,
         mood: Mood? = null,
         rule: Rule? = null,
