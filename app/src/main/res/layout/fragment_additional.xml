@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -10,82 +11,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
         android:paddingVertical="16dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/label_usage_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/corbel_bold"
             android:text="@string/label_usage_type"
             android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/top_navigation" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_usage_type"
-            style="@style/MyTextInputLayout_NoHorizontalPadding.DropdownMenu"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_usages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:layout_constraintTop_toBottomOf="@+id/label_usage_type">
+            android:isScrollContainer="false"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollbarAlwaysDrawVerticalTrack="false"
+            tools:itemCount="3"
+            tools:listitem="@layout/layout_item_usage" />
 
-            <AutoCompleteTextView
-                android:id="@+id/ac_usage_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:hint="@string/hint_usage_type"
-                android:inputType="textNoSuggestions"
-                android:labelFor="@id/til_email"
-                android:paddingHorizontal="0dp"
-                android:paddingVertical="12dp"
-                android:textSize="16sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/label_usage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/corbel_bold"
-            android:text="@string/label_usage"
-            android:textSize="14sp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/top_navigation" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_usage"
-            style="@style/MyTextInputLayout_NoHorizontalPadding.DropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:hintEnabled="false"
-            app:layout_constraintTop_toBottomOf="@+id/label_usage">
-
-            <AutoCompleteTextView
-                android:id="@+id/ac_usage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:hint="@string/hint_usage"
-                android:inputType="textNoSuggestions"
-                android:labelFor="@id/til_email"
-                android:paddingHorizontal="0dp"
-                android:paddingVertical="12dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_usage"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/btn_add_usage"
+            android:textAllCaps="false"
+            android:textSize="11sp"
+            app:cornerRadius="24dp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/label_mood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/corbel_bold"
             android:text="@string/label_mood"
@@ -97,6 +67,7 @@
             style="@style/MyTextInputLayout_NoHorizontalPadding.DropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@+id/label_mood">
 
@@ -120,6 +91,7 @@
             android:id="@+id/label_rule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/corbel_bold"
             android:text="@string/label_rule"
@@ -131,6 +103,7 @@
             style="@style/MyTextInputLayout_NoHorizontalPadding.DropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@+id/label_rule">
 
@@ -154,6 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
@@ -187,6 +161,7 @@
             android:id="@+id/label_meaning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/corbel_bold"
             android:text="@string/label_meaning"
@@ -197,6 +172,7 @@
             style="@style/MyTextInputLayout_NoHorizontalPadding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@+id/label_meaning">
 
@@ -218,6 +194,7 @@
             android:id="@+id/label_lyrics"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/corbel_bold"
             android:text="@string/label_lyrics_idn"
@@ -227,6 +204,7 @@
             android:id="@+id/label_description_lyrics"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:fontFamily="@font/corbel_italic"
             android:text="@string/description_label_lyrics"
             android:textSize="12sp" />
@@ -235,11 +213,13 @@
             android:id="@+id/lyrics_input_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:orientation="vertical" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
