@@ -17,6 +17,7 @@
     <string name="title_additional">Tambahan</string>
     <string name="title_media">Media</string>
     <string name="title_add_rule">Tambah Aturan</string>
+    <string name="title_add_usage">Tambah Kegunaan</string>
 
     <!-- Heading -->
     <string name="heading_get_started">Introducing Metembang Bali</string>
@@ -132,6 +133,7 @@
     <string name="helper_empty_sub_category">Mohon pilih sub kategori tembang</string>
     <string name="helper_empty_lyrics">Lirik tembang tidak boleh kosong</string>
     <string name="helper_empty_usage">Mohon pilih kegunaan tembang</string>
+    <string name="helper_empty_usage_type">Mohon pilih tipe kegunaan tembang</string>
     <string name="helper_empty_audio_file">File audio tidak boleh kosong</string>
     <string name="helper_empty_cover_source">Sumber cover tidak boleh kosong</string>
     <string name="helper_empty_rule_name">Nama aturan tidak boleh kosong</string>
@@ -154,6 +156,7 @@
     <string name="btn_next">Selanjutnya</string>
     <string name="btn_finish">Selesai</string>
     <string name="btn_add_rule">Tambah Aturan</string>
+    <string name="btn_add_usage">Tambah Kegunaan</string>
 
     <!-- Radio Button -->
     <string name="rb_no_cover">Jangan isi cover</string>
