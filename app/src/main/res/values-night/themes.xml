@@ -20,6 +20,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="MyTextInputLayout_NoHorizontalPadding.DropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="materialThemeOverlay">@style/NoPadding_Overlay</item>
+    </style>
+
     <style name="MyTextInputLayout_NoHorizontalPadding" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="materialThemeOverlay">@style/NoPadding_Overlay</item>
     </style>
@@ -49,11 +53,6 @@
     <style name="RoundedCornerImageView.12dp">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">12dp</item>
-    </style>
-
-    <style name="RoundedCornerImageView.24dp">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">24dp</item>
     </style>
 
 </resources>

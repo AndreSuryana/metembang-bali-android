@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- App Name -->
     <string name="app_name">Metembang Bali</string>
 
@@ -25,18 +25,13 @@
     <string name="heading_sign_up">Sign up</string>
     <string name="heading_latest">Tembang terbaru</string>
     <string name="heading_top_most_viewed">Top 5 tembang yang sering dilihat</string>
-    <string name="heading_search_result">Hasil pencarian tembang</string>
     <string name="heading_tembang">Tembang</string>
     <string name="heading_account">Akun</string>
     <string name="heading_delete_submission">Hapus submission</string>
 
     <!-- Description -->
     <string name="description_get_started">Metembang Bali adalah aplikasi berbasis mobile untuk mengenal Tembang Bali.</string>
-    <string name="description_search_result" tools:ignore="PluralsCandidate">%d tembang ditemukan</string>
     <string name="description_label_lyrics">Lirik tembang dituliskan per-baris</string>
-    <string name="description_guru_gatra">Jumlah baris dalam satu bait (pada)</string>
-    <string name="description_guru_wilang">Jumlah suku kata dalam satu baris (satu gatra)</string>
-    <string name="description_guru_dingdong">suara akhir pada setiap baris (a,i,u,e,o)</string>
 
     <!-- Menu Item -->
     <string name="menu_submission">Submission</string>
@@ -135,7 +130,6 @@
     <string name="helper_empty_usage">Mohon pilih kegunaan tembang</string>
     <string name="helper_empty_usage_type">Mohon pilih tipe kegunaan tembang</string>
     <string name="helper_empty_audio_file">File audio tidak boleh kosong</string>
-    <string name="helper_empty_cover_source">Sumber cover tidak boleh kosong</string>
     <string name="helper_empty_rule_name">Nama aturan tidak boleh kosong</string>
     <string name="helper_empty_guru_gatra">Guru gatra tidak boleh kosong</string>
     <string name="helper_empty_guru_wilang">Guru wilang tidak boleh kosong</string>
@@ -171,7 +165,6 @@
     <string name="prompt_dont_have_account">Belum memiliki akun?</string>
     <string name="prompt_already_have_account">Sudah memiliki akun?</string>
     <string name="prompt_delete_submission">Apakah Anda yakin ingin menghapus submission ini?</string>
-    <string name="prompt_choose_image_source">Pilih sumber file gambar</string>
     <string name="prompt_add_submission">Apakah Anda yakin ingin menambahkan submission ini?</string>
     <string name="prompt_add_rule">Tidak menemukan aturan yang cocok?</string>
 
@@ -184,7 +177,6 @@
 
     <!-- Other -->
     <string name="or">or</string>
-    <string name="rv_result_layout_behavior">scroll|enterAlways</string>
     <string name="result_not_found">Tembang tidak ditemukan</string>
     <string name="guest_name">Guest</string>
     <string name="duration_placeholder">--:--</string>
