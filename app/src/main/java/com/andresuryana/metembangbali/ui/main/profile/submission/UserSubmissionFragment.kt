@@ -62,8 +62,7 @@ class UserSubmissionFragment : Fragment() {
         // Setup recycler view
         binding.rvSubmission.layoutManager = LinearLayoutManager(activity)
 
-        // Get & observe user submissions
-        viewModel.getUserSubmission()
+        // Observe user submissions
         viewModel.submission.observe(viewLifecycleOwner, this::submissionObserver)
 
         // Observe delete submission
@@ -80,6 +79,12 @@ class UserSubmissionFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getUserSubmission()
     }
 
     private fun setupButtonListener() {
