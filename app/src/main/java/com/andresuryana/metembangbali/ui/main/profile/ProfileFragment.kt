@@ -1,11 +1,14 @@
 package com.andresuryana.metembangbali.ui.main.profile
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,11 +24,16 @@ import com.andresuryana.metembangbali.ui.main.profile.submission.UserSubmissionF
 import com.andresuryana.metembangbali.utils.Constants.REGISTERED_USER
 import com.andresuryana.metembangbali.utils.SessionManager
 import com.andresuryana.metembangbali.utils.event.SignOutEvent
+import com.andresuryana.metembangbali.utils.event.UpdateAvatarEvent
 import com.andresuryana.metembangbali.utils.event.UserEvent
 import com.bumptech.glide.Glide
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import java.io.File
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -42,6 +50,30 @@ class ProfileFragment : Fragment() {
 
     // Session manager
     private lateinit var sessionManager: SessionManager
+
+    // Image picker register activity result
+    private val startImagePickerResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            lifecycleScope.launch(Dispatchers.IO) {
+                when (it.resultCode) {
+                    Activity.RESULT_OK -> {
+                        // Image uri from data
+                        val imageUri = it.data?.data!!
+                        Log.d("MediaFragment", "imageResult: uri=$imageUri")
+
+                        // Convert uri to file and update profile avatar
+                        viewModel.updateProfileAvatar(imageUri.toFile())
+                    }
+                    ImagePicker.RESULT_ERROR -> {
+                        Helpers.snackBarError(
+                            binding.root,
+                            ImagePicker.getError(it.data),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +97,11 @@ class ProfileFragment : Fragment() {
             lifecycleScope.launchWhenStarted {
                 viewModel.signOut.collectLatest { signOutObserver(it) }
             }
+        }
+
+        // Observe update profile avatar
+        lifecycleScope.launchWhenStarted {
+            viewModel.updateAvatar.collectLatest { updateProfileAvatarObserver(it) }
         }
 
         // Setup button listener
@@ -118,8 +155,15 @@ class ProfileFragment : Fragment() {
     private fun setupButtonListener() {
         // Button edit profile photo
         binding.btnEditProfilePhoto.setOnClickListener {
-            // TODO : Create photo chooser intent (camera & gallery) with crop 1:1 ratio
-            Toast.makeText(activity, "Edit Profile Photo", Toast.LENGTH_SHORT).show()
+            ImagePicker.with(requireActivity())
+                .cropSquare()
+                .galleryMimeTypes(arrayOf("image/jpg", "image/jpeg", "image/png"))
+                .maxResultSize(400, 400)
+                .compress(1024)
+                .saveDir(File(activity?.filesDir, "Metembang Bali"))
+                .createIntent {
+                    startImagePickerResult.launch(it)
+                }
         }
 
         // Menu my tembang
@@ -226,6 +270,42 @@ class ProfileFragment : Fragment() {
                     loadingDialog.show(
                         parentFragmentManager,
                         LoadingDialogFragment::class.java.simpleName
+                    )
+                }
+            }
+        }
+    }
+
+    private fun updateProfileAvatarObserver(event: UpdateAvatarEvent) {
+        when (event) {
+            is UpdateAvatarEvent.Success -> {
+                loadingDialog.dismiss()
+
+                // Update user info
+                viewModel.fetchUser()
+
+                Helpers.snackBarSuccess(
+                    binding.root,
+                    getString(R.string.success_update_profile_avatar)
+                ).show()
+            }
+            is UpdateAvatarEvent.Error -> {
+                loadingDialog.dismiss()
+                Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
+            }
+            is UpdateAvatarEvent.NetworkError -> {
+                loadingDialog.dismiss()
+                Helpers.snackBarError(
+                    binding.root,
+                    getString(R.string.error_default_network_error),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            is UpdateAvatarEvent.Loading -> {
+                if (!loadingDialog.isAdded) {
+                    loadingDialog.show(
+                        parentFragmentManager,
+                        UpdateAvatarEvent::class.java.simpleName
                     )
                 }
             }

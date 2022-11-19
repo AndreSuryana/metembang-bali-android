@@ -7,11 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.andresuryana.metembangbali.data.repository.MetembangRepository
 import com.andresuryana.metembangbali.utils.Resource
 import com.andresuryana.metembangbali.utils.event.SignOutEvent
+import com.andresuryana.metembangbali.utils.event.UpdateAvatarEvent
 import com.andresuryana.metembangbali.utils.event.UserEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +26,9 @@ class ProfileViewModel @Inject constructor(
 
     private val _signOut = MutableSharedFlow<SignOutEvent>()
     val signOut: SharedFlow<SignOutEvent> = _signOut
+
+    private val _updateAvatar = MutableSharedFlow<UpdateAvatarEvent>()
+    val updateAvatar: SharedFlow<UpdateAvatarEvent> = _updateAvatar
 
     fun fetchUser() {
         viewModelScope.launch {
@@ -49,6 +54,20 @@ class ProfileViewModel @Inject constructor(
                     _signOut.emit(SignOutEvent.Error(response.message!!))
                 is Resource.NetworkError ->
                     _signOut.emit(SignOutEvent.NetworkError)
+            }
+        }
+    }
+
+    fun updateProfileAvatar(image: File) {
+        viewModelScope.launch {
+            _updateAvatar.emit(UpdateAvatarEvent.Loading)
+            when (val response = repository.uploadUserPhoto(image)) {
+                is Resource.Success ->
+                    _updateAvatar.emit(UpdateAvatarEvent.Success)
+                is Resource.Error ->
+                    _updateAvatar.emit(UpdateAvatarEvent.Error(response.message!!))
+                is Resource.NetworkError ->
+                    _updateAvatar.emit(UpdateAvatarEvent.NetworkError)
             }
         }
     }

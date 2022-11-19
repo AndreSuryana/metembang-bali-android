@@ -56,6 +56,7 @@
     <string name="success_delete_submission">Submission berhasil dihapus</string>
     <string name="success_add_submission">Submission berhasil dikirim</string>
     <string name="success_change_font_size">Ukuran font berhasil diperbarui</string>
+    <string name="success_update_profile_avatar">Foto profil berhasil diperbarui</string>
 
     <!-- Error Message -->
     <string name="error_default_network_error">Something went wrong!</string>
