@@ -21,7 +21,6 @@ import com.andresuryana.metembangbali.dialog.LoadingDialogFragment
 import com.andresuryana.metembangbali.helper.AnimationHelper.animateFadeIn
 import com.andresuryana.metembangbali.helper.AnimationHelper.animateFadeOut
 import com.andresuryana.metembangbali.helper.Helpers
-import com.andresuryana.metembangbali.helper.Helpers.formatDate
 import com.andresuryana.metembangbali.utils.Ext.toMusicTimeline
 import com.andresuryana.metembangbali.utils.event.TembangDetailEvent
 import com.bumptech.glide.Glide
@@ -31,6 +30,7 @@ import com.google.android.exoplayer2.Player
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -360,7 +360,9 @@ class DetailActivity : AppCompatActivity() {
                             it.activity.toString()
                         }
                     } else "-"
-                    tvDateCreated.text = formatDate(event.tembang.createdAt) ?: ("-")
+                    tvDateCreated.text = if (event.tembang.createdAt != null) {
+                        SimpleDateFormat("dd MMMM yyyy").format(event.tembang.createdAt)
+                    } else { "-" }
                 }
 
                 // Set lyrics adapter list

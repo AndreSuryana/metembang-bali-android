@@ -10,6 +10,8 @@ import android.webkit.MimeTypeMap
 import com.andresuryana.metembangbali.helper.Helpers.generateFilename
 import org.apache.commons.io.FileUtils
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -124,4 +126,14 @@ object Ext {
             str.replaceFirstChar { it.uppercase() }
         }
     }
+
+    fun Date?.toTimeInMillis(): Long {
+        return try {
+            this?.time ?: 0
+        } catch (e: Exception) {
+            e.printStackTrace()
+            0
+        }
+    }
+
 }
