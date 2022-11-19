@@ -61,7 +61,7 @@ interface MetembangService {
     @Multipart
     @POST("v1/user/photo")
     suspend fun uploadUserPhoto(
-        @Part("photo") photo: MultipartBody.Part
+        @Part photo: MultipartBody.Part
     ): Response<Wrapper<Boolean>>
 
     /**
