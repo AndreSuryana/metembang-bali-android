@@ -56,14 +56,18 @@ class SearchViewModel @Inject constructor(
     }
 
     fun sortByTitle(method: Method) {
-        _list.value = _list.value?.run {
-            SelectionSort(this).sortByTitle(method)
+        if (_list.value?.isNotEmpty() == true) {
+            _list.value = _list.value?.run {
+                SelectionSort(this).sortByTitle(method)
+            }
         }
     }
 
     fun sortByDate(method: Method) {
-        _list.value = _list.value?.run {
-            SelectionSort(this).sortByDate(method)
+        if (_list.value?.isNotEmpty() == true) {
+            _list.value = _list.value?.run {
+                SelectionSort(this).sortByDate(method)
+            }
         }
     }
 }
