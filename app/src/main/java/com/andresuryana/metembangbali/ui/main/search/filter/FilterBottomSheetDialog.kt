@@ -92,6 +92,28 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
 
         // Setup observer
         setupObserver()
+
+        // Pre-fill dropdown input of current view model state values
+        viewModel.category?.let {
+            binding.acCategory.setText(it.name)
+        }
+        viewModel.subCategory?.let {
+            binding.acSubCategory.setText(it.name)
+            binding.acSubCategory.visibility = View.VISIBLE
+        }
+        viewModel.usageType?.let {
+            binding.acUsageType.setText(it.name)
+        }
+        viewModel.usage?.let {
+            binding.acUsage.setText(it.activity)
+            binding.acUsage.visibility = View.VISIBLE
+        }
+        viewModel.mood?.let {
+            binding.acMood.setText(it.description)
+        }
+        viewModel.rule?.let {
+            binding.acRule.setText(it.toString())
+        }
     }
 
     override fun onDestroy() {
@@ -148,7 +170,11 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         binding.btnSetFilter.setOnClickListener {
             // Check if there is no filter selected
             if (isFilterEmpty()) {
-                Toast.makeText(context, getString(R.string.warning_no_search_filter), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    getString(R.string.warning_no_search_filter),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 // Return current search filter
                 onResultCallback?.invoke(
