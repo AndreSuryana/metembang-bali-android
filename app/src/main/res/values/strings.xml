@@ -71,6 +71,7 @@
     <string name="warning_submission_status_pending">Submission masih dalam tahap review</string>
     <string name="warning_submission_status_rejected">Submission tembang Anda telah ditolak</string>
     <string name="warning_no_image_file">File gambar tidak boleh kosong</string>
+    <string name="warning_no_search_filter">Masukan minimal 1 filter pencarian</string>
 
     <!-- Input Label -->
     <string name="label_email">Email</string>
