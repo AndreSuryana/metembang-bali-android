@@ -56,8 +56,11 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         // Setup dropdown input
         setupDropdown()
 
-        // Setup observer
-        setupObserver()
+        // Get filters
+        viewModel.getCategories()
+        viewModel.getUsageTypes()
+        viewModel.getMoods()
+        viewModel.getRules()
 
         // Button set filter color
         binding.btnSetFilter.apply {
@@ -87,10 +90,8 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.getCategories()
-        viewModel.getUsageTypes()
-        viewModel.getMoods()
-        viewModel.getRules()
+        // Setup observer
+        setupObserver()
     }
 
     override fun onDestroy() {
