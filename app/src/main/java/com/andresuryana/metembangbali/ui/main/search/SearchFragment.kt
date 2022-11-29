@@ -88,7 +88,10 @@ class SearchFragment : Fragment() {
         viewModel.list.observe(requireActivity()) {
             // Set result
             resultAdapter.setList(it)
-            binding.rvResult.adapter = resultAdapter
+            binding?.rvResult?.adapter = resultAdapter
+
+            // Reset selected sort method
+            resetSortMenu()
         }
 
         // Setup refresh layout listener
@@ -152,6 +155,11 @@ class SearchFragment : Fragment() {
             }
         }
         popupMenu?.menu?.findItem(menu.itemId)?.isChecked = true
+    }
+
+    private fun resetSortMenu() {
+        // Reset to default
+        popupMenu?.menu?.findItem(R.id.menu_sort_by_date_desc)?.isChecked = true
     }
 
     private fun onResultItemClicked(tembang: Tembang) {
