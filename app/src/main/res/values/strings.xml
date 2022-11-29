@@ -51,8 +51,8 @@
     <string name="menu_setting_font_size">Ukuran Font</string>
     <string name="menu_sort_by_title_asc">Menaik (A-Z)</string>
     <string name="menu_sort_by_title_desc">Menurun (Z-A)</string>
-    <string name="menu_sort_by_date_asc">Terbaru</string>
-    <string name="menu_sort_by_date_desc">Terlama</string>
+    <string name="menu_sort_by_date_asc">Terlama</string>
+    <string name="menu_sort_by_date_desc">Terbaru</string>
 
     <!-- Success Message -->
     <string name="success_edit_profile">Profil telah berhasil diperbarui</string>
