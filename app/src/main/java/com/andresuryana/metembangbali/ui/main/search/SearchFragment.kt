@@ -4,9 +4,12 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +22,7 @@ import com.andresuryana.metembangbali.helper.Helpers
 import com.andresuryana.metembangbali.ui.main.detail.DetailActivity
 import com.andresuryana.metembangbali.ui.main.search.filter.FilterBottomSheetDialog
 import com.andresuryana.metembangbali.utils.event.TembangListEvent
+import com.andresuryana.metembangbali.utils.sorting.SelectionSort
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,6 +47,9 @@ class SearchFragment : Fragment() {
     // Recycler view adapter
     private val resultAdapter = ResultAdapter()
 
+    // Popup menu
+    private var popupMenu: PopupMenu? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,6 +67,15 @@ class SearchFragment : Fragment() {
             viewModel.setFilter(filter)
         }
 
+        // Init popup menu
+        popupMenu = PopupMenu(requireContext(), binding.btnSort, Gravity.END).apply {
+            inflate(R.menu.menu_sorting)
+            setOnMenuItemClickListener {
+                onMenuSortClickListener(it)
+                true
+            }
+        }
+
         // Setup adapter
         resultAdapter.setOnItemClickListener(this::onResultItemClicked)
 
@@ -72,6 +88,13 @@ class SearchFragment : Fragment() {
         // Observe search filter
         viewModel.filter.observe(viewLifecycleOwner) { filter ->
             viewModel.getTembang(filter)
+        }
+
+        // Observe list
+        viewModel.list.observe(requireActivity()) {
+            // Set result
+            resultAdapter.setList(it)
+            binding.rvResult.adapter = resultAdapter
         }
 
         // Setup refresh layout listener
@@ -99,6 +122,30 @@ class SearchFragment : Fragment() {
                 FilterBottomSheetDialog::class.java.simpleName
             )
         }
+
+        // Sort button listener
+        binding.btnSort.setOnClickListener {
+            // Show popup menu
+            popupMenu?.show()
+        }
+    }
+
+    private fun onMenuSortClickListener(menu: MenuItem) {
+        when (menu.itemId) {
+            R.id.menu_sort_by_title_asc -> {
+                viewModel.sortByTitle(SelectionSort.Method.ASC)
+            }
+            R.id.menu_sort_by_title_desc -> {
+                viewModel.sortByTitle(SelectionSort.Method.DESC)
+            }
+            R.id.menu_sort_by_date_asc -> {
+                viewModel.sortByDate(SelectionSort.Method.ASC)
+            }
+            R.id.menu_sort_by_date_desc -> {
+                viewModel.sortByDate(SelectionSort.Method.DESC)
+            }
+        }
+        popupMenu?.menu?.findItem(menu.itemId)?.isChecked = true
     }
 
     private fun onResultItemClicked(tembang: Tembang) {
@@ -118,10 +165,6 @@ class SearchFragment : Fragment() {
                 // Update recycler view & empty container visibility
                 binding.emptyContainer.root.visibility = View.GONE
                 binding.rvResult.visibility = View.VISIBLE
-
-                // Set result
-                resultAdapter.setList(event.listResponse.list)
-                binding.rvResult.adapter = resultAdapter
             }
             is TembangListEvent.Error -> {
                 // Update loading/refresh state

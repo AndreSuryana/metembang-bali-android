@@ -2,9 +2,12 @@ package com.andresuryana.metembangbali.ui.main.search
 
 import androidx.lifecycle.*
 import com.andresuryana.metembangbali.data.model.SearchFilter
+import com.andresuryana.metembangbali.data.model.Tembang
 import com.andresuryana.metembangbali.data.repository.MetembangRepository
 import com.andresuryana.metembangbali.utils.Resource
 import com.andresuryana.metembangbali.utils.event.TembangListEvent
+import com.andresuryana.metembangbali.utils.sorting.SelectionSort
+import com.andresuryana.metembangbali.utils.sorting.SelectionSort.Method
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,6 +19,9 @@ class SearchViewModel @Inject constructor(
 
     private val _listTembang = MutableLiveData<TembangListEvent>()
     val listTembang: LiveData<TembangListEvent> = _listTembang
+
+    private val _list = MutableLiveData<ArrayList<Tembang>>()
+    val list: LiveData<ArrayList<Tembang>> = _list
 
     private val _filter = MutableLiveData<SearchFilter>()
     val filter: LiveData<SearchFilter> = _filter
@@ -32,7 +38,10 @@ class SearchViewModel @Inject constructor(
             )) {
                 is Resource.Success -> {
                     if (response.data.size == 0) _listTembang.value = TembangListEvent.Empty
-                    else _listTembang.value = TembangListEvent.Success(response.data)
+                    else {
+                        _listTembang.value = TembangListEvent.Success(response.data)
+                        _list.value = response.data.list
+                    }
                 }
                 is Resource.Error ->
                     _listTembang.value = TembangListEvent.Error(response.message!!)
@@ -44,5 +53,17 @@ class SearchViewModel @Inject constructor(
 
     fun setFilter(filter: SearchFilter) {
         _filter.value = filter
+    }
+
+    fun sortByTitle(method: Method) {
+        _list.value = _list.value?.run {
+            SelectionSort(this).sortByTitle(method)
+        }
+    }
+
+    fun sortByDate(method: Method) {
+        _list.value = _list.value?.run {
+            SelectionSort(this).sortByDate(method)
+        }
     }
 }
