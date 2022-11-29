@@ -68,13 +68,7 @@ class SearchFragment : Fragment() {
         }
 
         // Init popup menu
-        popupMenu = PopupMenu(requireContext(), binding.btnSort, Gravity.END).apply {
-            inflate(R.menu.menu_sorting)
-            setOnMenuItemClickListener {
-                onMenuSortClickListener(it)
-                true
-            }
-        }
+        initPopupMenu()
 
         // Setup adapter
         resultAdapter.setOnItemClickListener(this::onResultItemClicked)
@@ -127,6 +121,18 @@ class SearchFragment : Fragment() {
         binding.btnSort.setOnClickListener {
             // Show popup menu
             popupMenu?.show()
+        }
+    }
+
+    private fun initPopupMenu() {
+        popupMenu = binding?.btnSort?.let { btnSort ->
+            PopupMenu(requireContext(), btnSort, Gravity.END).apply {
+                inflate(R.menu.menu_sorting)
+                setOnMenuItemClickListener {
+                    onMenuSortClickListener(it)
+                    true
+                }
+            }
         }
     }
 
