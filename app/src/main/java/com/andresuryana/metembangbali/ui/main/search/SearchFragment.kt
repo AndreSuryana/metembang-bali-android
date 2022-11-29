@@ -31,7 +31,7 @@ class SearchFragment : Fragment() {
 
     // Layout binding
     private var _binding: FragmentSearchBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     // View model
     private val viewModel: SearchViewModel by viewModels(ownerProducer = {
@@ -54,12 +54,12 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate layout
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
 
         // Set fab icon color
-        binding.fabSearchFilter.imageTintList = ColorStateList.valueOf(Color.WHITE)
+        binding?.fabSearchFilter?.imageTintList = ColorStateList.valueOf(Color.WHITE)
 
         // Init search filter bottom sheet dialog
         filterBottomSheetDialog = FilterBottomSheetDialog()
@@ -74,7 +74,7 @@ class SearchFragment : Fragment() {
         resultAdapter.setOnItemClickListener(this::onResultItemClicked)
 
         // Setup recycler view
-        binding.rvResult.layoutManager = LinearLayoutManager(activity)
+        binding?.rvResult?.layoutManager = LinearLayoutManager(activity)
 
         // Observe result
         viewModel.listTembang.observe(viewLifecycleOwner, this::listTembangObserver)
@@ -95,14 +95,14 @@ class SearchFragment : Fragment() {
         }
 
         // Setup refresh layout listener
-        binding.swipeRefresh.setOnRefreshListener {
+        binding?.swipeRefresh?.setOnRefreshListener {
             viewModel.getTembang()
         }
 
         // Setup button listener
         setupButtonListener()
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onDestroyView() {
@@ -112,7 +112,7 @@ class SearchFragment : Fragment() {
 
     private fun setupButtonListener() {
         // Fab search filter listener
-        binding.fabSearchFilter.setOnClickListener {
+        binding?.fabSearchFilter?.setOnClickListener {
             // Show search filter bottom sheet navigation
             filterBottomSheetDialog?.show(
                 parentFragmentManager,
@@ -121,7 +121,7 @@ class SearchFragment : Fragment() {
         }
 
         // Sort button listener
-        binding.btnSort.setOnClickListener {
+        binding?.btnSort?.setOnClickListener {
             // Show popup menu
             popupMenu?.show()
         }
@@ -174,39 +174,41 @@ class SearchFragment : Fragment() {
             is TembangListEvent.Success -> {
                 // Update loading/refresh state
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
-                if (binding.swipeRefresh.isRefreshing) binding.swipeRefresh.isRefreshing = false
+                if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
 
                 // Update recycler view & empty container visibility
-                binding.emptyContainer.root.visibility = View.GONE
-                binding.rvResult.visibility = View.VISIBLE
+                binding?.emptyContainer?.root?.visibility = View.GONE
+                binding?.rvResult?.visibility = View.VISIBLE
             }
             is TembangListEvent.Error -> {
                 // Update loading/refresh state
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
-                if (binding.swipeRefresh.isRefreshing) binding.swipeRefresh.isRefreshing = false
+                if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
 
                 // Update recycler view & empty container visibility
-                binding.emptyContainer.root.visibility = View.VISIBLE
-                binding.rvResult.visibility = View.GONE
+                binding?.emptyContainer?.root?.visibility = View.VISIBLE
+                binding?.rvResult?.visibility = View.GONE
 
-                Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
+                binding?.root?.let { Helpers.snackBarError(it, event.message, Snackbar.LENGTH_SHORT).show() }
             }
             is TembangListEvent.NetworkError -> {
                 // Update loading/refresh state
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
-                if (binding.swipeRefresh.isRefreshing) binding.swipeRefresh.isRefreshing = false
+                if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
 
                 // Update recycler view & empty container visibility
-                binding.emptyContainer.root.visibility = View.VISIBLE
-                binding.rvResult.visibility = View.GONE
+                binding?.emptyContainer?.root?.visibility = View.VISIBLE
+                binding?.rvResult?.visibility = View.GONE
 
-                Helpers.snackBarNetworkError(
-                    binding.root,
-                    getString(R.string.error_default_network_error),
-                    Snackbar.LENGTH_SHORT
-                ) {
-                    viewModel.getTembang()
-                }.show()
+                binding?.root?.let {
+                    Helpers.snackBarNetworkError(
+                        it,
+                        getString(R.string.error_default_network_error),
+                        Snackbar.LENGTH_SHORT
+                    ) {
+                        viewModel.getTembang()
+                    }.show()
+                }
             }
             is TembangListEvent.Loading -> {
                 if (!loadingDialog.isAdded) {
@@ -219,15 +221,15 @@ class SearchFragment : Fragment() {
             is TembangListEvent.Empty -> {
                 // Update loading/refresh state
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
-                if (binding.swipeRefresh.isRefreshing) binding.swipeRefresh.isRefreshing = false
+                if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
 
                 // Update empty container text & remove list from adapter
-                binding.emptyContainer.tvEmptyTitle.setText(R.string.result_not_found)
+                binding?.emptyContainer?.tvEmptyTitle?.setText(R.string.result_not_found)
                 resultAdapter.removeList()
 
                 // Update recycler view & empty container visibility
-                binding.emptyContainer.root.visibility = View.VISIBLE
-                binding.rvResult.visibility = View.GONE
+                binding?.emptyContainer?.root?.visibility = View.VISIBLE
+                binding?.rvResult?.visibility = View.GONE
             }
         }
     }
