@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.andresuryana.metembangbali.R
@@ -144,18 +145,23 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
     private fun setupButtonListener() {
         // Button set filter listener
         binding.btnSetFilter.setOnClickListener {
-            // Return current search filter
-            onResultCallback?.invoke(
-                SearchFilter(
-                    viewModel.category,
-                    viewModel.subCategory,
-                    viewModel.usageType,
-                    viewModel.usage,
-                    viewModel.mood,
-                    viewModel.rule
+            // Check if there is no filter selected
+            if (isFilterEmpty()) {
+                Toast.makeText(context, getString(R.string.warning_no_search_filter), Toast.LENGTH_SHORT).show()
+            } else {
+                // Return current search filter
+                onResultCallback?.invoke(
+                    SearchFilter(
+                        viewModel.category,
+                        viewModel.subCategory,
+                        viewModel.usageType,
+                        viewModel.usage,
+                        viewModel.mood,
+                        viewModel.rule
+                    )
                 )
-            )
-            dismiss()
+                dismiss()
+            }
         }
 
         // Button top navigation listener
@@ -205,6 +211,13 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         binding.labelUsage.visibility = visibility
         binding.tilUsage.visibility = visibility
     }
+
+    private fun isFilterEmpty(): Boolean = viewModel.category == null &&
+            viewModel.subCategory == null &&
+            viewModel.usageType == null &&
+            viewModel.usage == null &&
+            viewModel.mood == null &&
+            viewModel.rule == null
 
     private fun resetFilter() {
         // Emptying all dropdown
