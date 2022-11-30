@@ -66,6 +66,7 @@
     <string name="error_default_network_error">Something went wrong!</string>
     <string name="error_password_not_match">Password baru tidak cocok dengan konfirmasi password</string>
     <string name="error_no_previous_tembang">Tidak ada tembang sebelumnya</string>
+    <string name="error_no_internet_connection">Maaf, koneksi internet terputus</string>
 
     <!-- Warning Message -->
     <string name="warning_submission_status_pending">Submission masih dalam tahap review</string>
