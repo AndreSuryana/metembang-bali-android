@@ -19,6 +19,20 @@ class MetembangRepositoryImpl @Inject constructor(
     private val service: MetembangService
 ) : MetembangRepository {
 
+    private fun <T>handleError(t: Throwable): Resource<T> {
+        return when (t) {
+            is IOException -> Resource.NetworkError
+            is HttpException -> Resource.Error(t.message())
+            else -> Resource.Error("An error occurred")
+        }
+    }
+
+    private fun parseErrorBody(errorBody: ResponseBody?): Resource.Error {
+        val errorBodyString = errorBody?.string().toString()
+        val errorResponse = Gson().fromJson(errorBodyString, Wrapper::class.java)
+        return Resource.Error(errorResponse.message)
+    }
+
     override suspend fun signUp(
         name: String,
         email: String,
@@ -37,11 +51,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -59,11 +69,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -81,11 +87,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -103,11 +105,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -131,11 +129,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -156,11 +150,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -182,11 +172,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -277,11 +263,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -299,11 +281,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -321,11 +299,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -341,11 +315,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 parseErrorBody(response.errorBody())
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -363,11 +333,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -391,11 +357,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -413,11 +375,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -435,11 +393,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -457,11 +411,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -479,11 +429,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -501,11 +447,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -523,11 +465,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -545,11 +483,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 Resource.Error(errorResponse.message)
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
     }
 
@@ -565,19 +499,7 @@ class MetembangRepositoryImpl @Inject constructor(
                 parseErrorBody(response.errorBody())
             }
         } catch (t: Throwable) {
-            when (t) {
-                is IOException -> Resource.NetworkError
-                is HttpException -> Resource.Error(t.message())
-                else -> Resource.Error()
-            }
+            handleError(t)
         }
-    }
-
-    private fun parseErrorBody(errorBody: ResponseBody?): Resource.Error {
-
-        val errorBodyString = errorBody?.string().toString()
-        val errorResponse = Gson().fromJson(errorBodyString, Wrapper::class.java)
-
-        return Resource.Error(errorResponse.message)
     }
 }
