@@ -177,7 +177,20 @@ class EditProfileActivity : AppCompatActivity() {
             }
             return
         } else {
-            // TODO : Validate is phone number (create Ext function)
+            if (!phone.matches("\\^[+][0-9]\$".toRegex())) {
+                binding.tilPhone.apply {
+                    helperText = getString(R.string.helper_invalid_phone_must_number)
+                    requestFocus()
+                }
+                return
+            }
+            if (!phone.matches("\\^[+]{10,13}".toRegex())) {
+                binding.tilPhone.apply {
+                    helperText = getString(R.string.helper_invalid_phone_must_count)
+                    requestFocus()
+                }
+                return
+            }
         }
 
         if (address.isBlank()) {
