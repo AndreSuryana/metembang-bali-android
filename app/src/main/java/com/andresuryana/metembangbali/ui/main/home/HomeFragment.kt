@@ -151,9 +151,7 @@ class HomeFragment : Fragment() {
                 }.show()
             }
             is TembangListEvent.Loading -> {}
-            is TembangListEvent.Empty -> {
-                // TODO : Create empty layout
-            }
+            is TembangListEvent.Empty -> {}
         }
     }
 
@@ -176,9 +174,7 @@ class HomeFragment : Fragment() {
                 }.show()
             }
             is TembangListEvent.Loading -> {}
-            is TembangListEvent.Empty -> {
-                // TODO : Create empty layout
-            }
+            is TembangListEvent.Empty -> {}
         }
     }
 }

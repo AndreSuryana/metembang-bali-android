@@ -132,6 +132,8 @@
     <string name="helper_empty_password">Password tidak boleh kosong</string>
     <string name="helper_empty_complete_name">Nama lengkap tidak boleh kosong</string>
     <string name="helper_empty_phone">Nomor telepon tidak boleh kosong</string>
+    <string name="helper_invalid_phone_must_number">Nomor telepon harus berupa angka</string>
+    <string name="helper_invalid_phone_must_count">Nomor telepon harus berjumlah 10–13 angka</string>
     <string name="helper_empty_address">Alamat tidak boleh kosong</string>
     <string name="helper_invalid_email">Email tidak valid</string>
     <string name="helper_empty_old_password">Password lama tidak boleh kosong</string>
@@ -208,5 +210,8 @@
     <string name="answer_no">Tidak</string>
     <string name="answer_cancel">Batal</string>
     <string name="empty_result_default">Belum ada hasil tembang</string>
+    <string name="empty_result_not_found">Belum ada hasil tembang</string>
+    <string name="empty_category_not_found">Kategori tidak ditemukan</string>
+    <string name="empty_user_submission">Anda belum memiliki submission tembang</string>
 
 </resources>

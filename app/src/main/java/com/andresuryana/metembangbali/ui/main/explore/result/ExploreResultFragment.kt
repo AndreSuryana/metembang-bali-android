@@ -85,11 +85,23 @@ class ExploreResultFragment : Fragment() {
             is ExploreResultEvent.Success -> {
                 resultAdapter.setList(event.listResponse.list)
                 binding.rvResult.adapter = resultAdapter
+
+                // Update recycler view & empty container visibility
+                binding.emptyContainer.root.visibility = View.GONE
+                binding.rvResult.visibility = View.VISIBLE
             }
             is ExploreResultEvent.Error -> {
+                // Update recycler view & empty container visibility
+                binding.emptyContainer.root.visibility = View.VISIBLE
+                binding.rvResult.visibility = View.GONE
+
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is ExploreResultEvent.NetworkError -> {
+                // Update recycler view & empty container visibility
+                binding.emptyContainer.root.visibility = View.VISIBLE
+                binding.rvResult.visibility = View.GONE
+
                 Helpers.snackBarNetworkError(
                     binding.root,
                     getString(R.string.error_default_network_error),
@@ -100,7 +112,9 @@ class ExploreResultFragment : Fragment() {
             }
             is ExploreResultEvent.Loading -> {}
             is ExploreResultEvent.Empty -> {
-                // TODO : Create empty layout
+                // Update recycler view & empty container visibility
+                binding.emptyContainer.root.visibility = View.VISIBLE
+                binding.rvResult.visibility = View.GONE
             }
         }
     }

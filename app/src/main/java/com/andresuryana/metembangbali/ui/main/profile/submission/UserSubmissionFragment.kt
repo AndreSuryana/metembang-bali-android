@@ -151,16 +151,19 @@ class UserSubmissionFragment : Fragment() {
         when (event) {
             is SubmissionListEvent.Success -> {
                 loadingDialog.dismiss()
+                hideEmptyContainer()
                 submissionAdapter.setList(event.listResponse.list)
                 binding.rvSubmission.adapter = submissionAdapter
             }
             is SubmissionListEvent.Error -> {
                 loadingDialog.dismiss()
+                showEmptyContainer(R.string.empty_user_submission)
                 checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is SubmissionListEvent.NetworkError -> {
                 loadingDialog.dismiss()
+                showEmptyContainer(R.string.empty_user_submission)
                 Helpers.snackBarNetworkError(
                     binding.root,
                     getString(R.string.error_default_network_error),
@@ -180,7 +183,7 @@ class UserSubmissionFragment : Fragment() {
             }
             is SubmissionListEvent.Empty -> {
                 loadingDialog.dismiss()
-                // TODO : Create empty layout
+                showEmptyContainer(R.string.empty_user_submission)
             }
         }
     }
@@ -218,5 +221,18 @@ class UserSubmissionFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun showEmptyContainer(stringRes: Int?) {
+        if (stringRes != null) {
+            binding.emptyContainer.tvEmptyTitle.setText(stringRes)
+        }
+        binding.emptyContainer.root.visibility = View.VISIBLE
+        binding.rvSubmission.visibility = View.GONE
+    }
+
+    private fun hideEmptyContainer() {
+        binding.emptyContainer.root.visibility = View.GONE
+        binding.rvSubmission.visibility = View.VISIBLE
     }
 }

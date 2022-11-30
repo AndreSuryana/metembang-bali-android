@@ -176,18 +176,14 @@ class SearchFragment : Fragment() {
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
                 if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
 
-                // Update recycler view & empty container visibility
-                binding?.emptyContainer?.root?.visibility = View.GONE
-                binding?.rvResult?.visibility = View.VISIBLE
+                hideEmptyContainer()
             }
             is TembangListEvent.Error -> {
                 // Update loading/refresh state
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
                 if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
 
-                // Update recycler view & empty container visibility
-                binding?.emptyContainer?.root?.visibility = View.VISIBLE
-                binding?.rvResult?.visibility = View.GONE
+                showEmptyContainer(R.string.result_not_found)
 
                 binding?.root?.let { Helpers.snackBarError(it, event.message, Snackbar.LENGTH_SHORT).show() }
             }
@@ -196,9 +192,7 @@ class SearchFragment : Fragment() {
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
                 if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
 
-                // Update recycler view & empty container visibility
-                binding?.emptyContainer?.root?.visibility = View.VISIBLE
-                binding?.rvResult?.visibility = View.GONE
+                showEmptyContainer(R.string.result_not_found)
 
                 binding?.root?.let {
                     Helpers.snackBarNetworkError(
@@ -223,14 +217,22 @@ class SearchFragment : Fragment() {
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
                 if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
 
-                // Update empty container text & remove list from adapter
-                binding?.emptyContainer?.tvEmptyTitle?.setText(R.string.result_not_found)
+                showEmptyContainer(R.string.result_not_found)
                 resultAdapter.removeList()
-
-                // Update recycler view & empty container visibility
-                binding?.emptyContainer?.root?.visibility = View.VISIBLE
-                binding?.rvResult?.visibility = View.GONE
             }
         }
+    }
+
+    private fun showEmptyContainer(stringRes: Int?) {
+        if (stringRes != null) {
+            binding?.emptyContainer?.tvEmptyTitle?.setText(stringRes)
+        }
+        binding?.emptyContainer?.root?.visibility = View.VISIBLE
+        binding?.rvResult?.visibility = View.GONE
+    }
+
+    private fun hideEmptyContainer() {
+        binding?.emptyContainer?.root?.visibility = View.GONE
+        binding?.rvResult?.visibility = View.VISIBLE
     }
 }

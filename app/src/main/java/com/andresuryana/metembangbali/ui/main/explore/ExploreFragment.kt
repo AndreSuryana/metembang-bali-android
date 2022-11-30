@@ -87,15 +87,18 @@ class ExploreFragment : Fragment() {
         when (event) {
             is CategoryEvent.Success -> {
                 loadingDialog.dismiss()
+                hideEmptyContainer()
                 categoryAdapter.setList(event.categories)
                 binding.rvCategory.adapter = categoryAdapter
             }
             is CategoryEvent.Error -> {
                 loadingDialog.dismiss()
+                showEmptyContainer(R.string.empty_category_not_found)
                 snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is CategoryEvent.NetworkError -> {
                 loadingDialog.dismiss()
+                showEmptyContainer(R.string.empty_category_not_found)
                 snackBarNetworkError(
                     binding.root,
                     getString(R.string.error_default_network_error),
@@ -114,7 +117,7 @@ class ExploreFragment : Fragment() {
             }
             is CategoryEvent.Empty -> {
                 loadingDialog.dismiss()
-                // TODO : Create empty layout
+                showEmptyContainer(R.string.empty_category_not_found)
             }
         }
     }
@@ -163,5 +166,18 @@ class ExploreFragment : Fragment() {
             .addToBackStack(ExploreResultFragment::class.java.simpleName)
             .setReorderingAllowed(true)
             .commit()
+    }
+
+    private fun showEmptyContainer(stringRes: Int?) {
+        if (stringRes != null) {
+            binding.emptyContainer.tvEmptyTitle.setText(stringRes)
+        }
+        binding.emptyContainer.root.visibility = View.VISIBLE
+        binding.rvCategory.visibility = View.GONE
+    }
+
+    private fun hideEmptyContainer() {
+        binding.emptyContainer.root.visibility = View.GONE
+        binding.rvCategory.visibility = View.VISIBLE
     }
 }
