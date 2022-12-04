@@ -167,6 +167,7 @@
     <string name="btn_finish">Selesai</string>
     <string name="btn_add_rule">Tambah Aturan</string>
     <string name="btn_add_usage">Tambah Kegunaan</string>
+    <string name="btn_add_lyrics_idn">Tambah Terjemahan Lirik</string>
 
     <!-- Radio Button -->
     <string name="rb_no_cover">Jangan isi cover</string>

@@ -66,11 +66,6 @@ class AdditionalFragment : Fragment() {
             adapter = usageAdapter
         }
 
-        // Init lyrics input
-        if (binding.lyricsInputContainer.childCount <= 0) {
-            addLyricsInput()
-        }
-
         // Get dropdown values
         viewModel.getUsageTypes()
         viewModel.getMoods()
@@ -132,6 +127,17 @@ class AdditionalFragment : Fragment() {
         binding.btnAddUsage.setOnClickListener {
             usageDialog.show(parentFragmentManager, UsageBottomSheetDialog::class.java.simpleName)
         }
+
+        // Button add lyrics idn
+        binding.btnAddLyricsIdn.setOnClickListener {
+            // Init lyrics in Indonesia input
+            viewModel.lyrics?.forEachIndexed { index, value ->
+                addLyricsInput(index, value)
+            }
+
+            // Hide add lyrics idn button
+            binding.btnAddLyricsIdn.visibility = View.GONE
+        }
     }
 
     private fun setupBottomSheetDialog() {
@@ -154,24 +160,17 @@ class AdditionalFragment : Fragment() {
         }
     }
 
-    private fun addLyricsInput() {
+    private fun addLyricsInput(index: Int, value: String) {
         // Inflate layout input item
-        val index = binding.lyricsInputContainer.childCount
         val child = LayoutInflater.from(activity)
             .inflate(R.layout.item_lyrics_input_item, null) as TextInputLayout
         child.editText?.hint = getString(R.string.hint_lyrics_input, index + 1)
+        child.helperText = value
 
         // Remove focus listener on previous child view
         if (index > 0) {
             val prevChild = binding.lyricsInputContainer.getChildAt(index - 1) as TextInputLayout
             prevChild.editText?.onFocusChangeListener = null
-        }
-
-        // Add focus listener on child view
-        child.editText?.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                addLyricsInput()
-            }
         }
 
         binding.lyricsInputContainer.addView(child, index)

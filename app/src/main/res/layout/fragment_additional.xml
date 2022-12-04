@@ -209,6 +209,23 @@
             android:text="@string/description_label_lyrics"
             android:textSize="12sp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_lyrics_idn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/btn_add_lyrics_idn"
+            android:textAllCaps="false"
+            android:textSize="11sp"
+            app:cornerRadius="24dp" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lyrics_input_container"
             android:layout_width="match_parent"
