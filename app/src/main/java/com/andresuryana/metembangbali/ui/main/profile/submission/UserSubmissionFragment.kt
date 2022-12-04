@@ -150,19 +150,19 @@ class UserSubmissionFragment : Fragment() {
     private fun submissionObserver(event: SubmissionListEvent) {
         when (event) {
             is SubmissionListEvent.Success -> {
-                loadingDialog.dismiss()
+                if (loadingDialog.isVisible) loadingDialog.dismiss()
                 hideEmptyContainer()
                 submissionAdapter.setList(event.listResponse.list)
                 binding.rvSubmission.adapter = submissionAdapter
             }
             is SubmissionListEvent.Error -> {
-                loadingDialog.dismiss()
+                if (loadingDialog.isVisible) loadingDialog.dismiss()
                 showEmptyContainer(R.string.empty_user_submission)
                 checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is SubmissionListEvent.NetworkError -> {
-                loadingDialog.dismiss()
+                if (loadingDialog.isVisible) loadingDialog.dismiss()
                 showEmptyContainer(R.string.empty_user_submission)
                 Helpers.snackBarNetworkError(
                     binding.root,
@@ -182,7 +182,7 @@ class UserSubmissionFragment : Fragment() {
                 }
             }
             is SubmissionListEvent.Empty -> {
-                loadingDialog.dismiss()
+                if (loadingDialog.isVisible) loadingDialog.dismiss()
                 showEmptyContainer(R.string.empty_user_submission)
             }
         }
@@ -191,7 +191,7 @@ class UserSubmissionFragment : Fragment() {
     private fun deleteSubmissionObserver(event: DeleteSubmissionEvent) {
         when (event) {
             is DeleteSubmissionEvent.Success -> {
-                loadingDialog.dismiss()
+                if (loadingDialog.isVisible) loadingDialog.dismiss()
                 deletedPosition?.let { submissionAdapter.removeItemAt(it) }
                 Helpers.snackBarSuccess(
                     binding.root,
@@ -200,12 +200,12 @@ class UserSubmissionFragment : Fragment() {
                 ).show()
             }
             is DeleteSubmissionEvent.Error -> {
-                loadingDialog.dismiss()
+                if (loadingDialog.isVisible) loadingDialog.dismiss()
                 checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is DeleteSubmissionEvent.NetworkError -> {
-                loadingDialog.dismiss()
+                if (loadingDialog.isVisible) loadingDialog.dismiss()
                 Helpers.snackBarError(
                     binding.root,
                     getString(R.string.error_default_network_error),
@@ -215,7 +215,7 @@ class UserSubmissionFragment : Fragment() {
             is DeleteSubmissionEvent.Loading -> {
                 if (!loadingDialog.isAdded) {
                     loadingDialog.show(
-                        parentFragmentManager,
+                        requireParentFragment().parentFragmentManager,
                         LoadingDialogFragment::class.java.simpleName
                     )
                 }
