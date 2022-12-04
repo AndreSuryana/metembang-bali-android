@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andresuryana.metembangbali.R
 import com.andresuryana.metembangbali.data.model.Category
 import com.andresuryana.metembangbali.databinding.ItemCategoryBinding
+import com.andresuryana.metembangbali.utils.CategoryConstants.IMAGES
 import com.bumptech.glide.Glide
 
 class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
@@ -42,9 +43,9 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
         fun onBind(category: Category) {
             binding.tvCategoryName.text = category.name
             Glide.with(binding.root)
-                .load(R.drawable.screen_1)
-                .placeholder(R.drawable.screen_1)
-                .error(R.drawable.screen_1)
+                .load(IMAGES.getOrDefault(category.id, R.drawable.ic_category_default))
+                .placeholder(R.drawable.ic_category_default)
+                .error(R.drawable.ic_category_default)
                 .centerCrop()
                 .into(binding.ivCategoryImage)
             binding.root.setOnClickListener {
