@@ -3,7 +3,6 @@ package com.andresuryana.metembangbali.di
 import android.content.Context
 import com.andresuryana.metembangbali.BuildConfig
 import com.andresuryana.metembangbali.data.remote.MetembangService
-import com.andresuryana.metembangbali.data.remote.NetworkInterceptor
 import com.andresuryana.metembangbali.data.remote.ServiceInterceptor
 import com.andresuryana.metembangbali.data.repository.MetembangRepository
 import com.andresuryana.metembangbali.data.repository.MetembangRepositoryImpl
@@ -34,7 +33,6 @@ object MetembangModule {
             if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
             else HttpLoggingInterceptor.Level.NONE
         )
-        val networkInterceptor = NetworkInterceptor(context)
         val serviceInterceptor = ServiceInterceptor(context)
 
         // Client
@@ -42,7 +40,6 @@ object MetembangModule {
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(networkInterceptor)
             .addInterceptor(serviceInterceptor)
             .build()
 
