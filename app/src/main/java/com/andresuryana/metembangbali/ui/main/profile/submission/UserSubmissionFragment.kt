@@ -70,6 +70,11 @@ class UserSubmissionFragment : Fragment() {
             viewModel.deleteSubmission.collectLatest { deleteSubmissionObserver(it) }
         }
 
+        // Setup refresh layout listener
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.getUserSubmission()
+        }
+
         // Setup button listener
         setupButtonListener()
 
@@ -150,19 +155,25 @@ class UserSubmissionFragment : Fragment() {
     private fun submissionObserver(event: SubmissionListEvent) {
         when (event) {
             is SubmissionListEvent.Success -> {
+                // Update loading/refresh state
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
+                if (binding.swipeRefresh.isRefreshing) binding.swipeRefresh.isRefreshing = false
                 hideEmptyContainer()
                 submissionAdapter.setList(event.listResponse.list)
                 binding.rvSubmission.adapter = submissionAdapter
             }
             is SubmissionListEvent.Error -> {
+                // Update loading/refresh state
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
+                if (binding.swipeRefresh.isRefreshing) binding.swipeRefresh.isRefreshing = false
                 showEmptyContainer(R.string.empty_user_submission)
                 checkErrorState(binding.root, event.message)
                 Helpers.snackBarError(binding.root, event.message, Snackbar.LENGTH_SHORT).show()
             }
             is SubmissionListEvent.NetworkError -> {
+                // Update loading/refresh state
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
+                if (binding.swipeRefresh.isRefreshing) binding.swipeRefresh.isRefreshing = false
                 showEmptyContainer(R.string.empty_user_submission)
                 Helpers.snackBarNetworkError(
                     binding.root,
@@ -182,7 +193,9 @@ class UserSubmissionFragment : Fragment() {
                 }
             }
             is SubmissionListEvent.Empty -> {
+                // Update loading/refresh state
                 if (loadingDialog.isVisible) loadingDialog.dismiss()
+                if (binding.swipeRefresh.isRefreshing) binding.swipeRefresh.isRefreshing = false
                 showEmptyContainer(R.string.empty_user_submission)
             }
         }
