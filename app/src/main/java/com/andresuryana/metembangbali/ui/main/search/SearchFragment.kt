@@ -86,9 +86,14 @@ class SearchFragment : Fragment() {
 
         // Observe list
         viewModel.list.observe(requireActivity()) {
-            // Set result
-            resultAdapter.setList(it)
-            binding?.rvResult?.adapter = resultAdapter
+            if (it.isNotEmpty()) {
+                // Set result
+                resultAdapter.setList(it)
+                binding?.rvResult?.adapter = resultAdapter
+            } else {
+                // Show empty layout
+                showEmptyContainer()
+            }
 
             // Reset selected sort method
             resetSortMenu()
@@ -223,7 +228,7 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun showEmptyContainer(stringRes: Int?) {
+    private fun showEmptyContainer(stringRes: Int? = null) {
         if (stringRes != null) {
             binding?.emptyContainer?.tvEmptyTitle?.setText(stringRes)
         }

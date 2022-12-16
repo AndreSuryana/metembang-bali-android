@@ -23,35 +23,39 @@ class SearchViewModel @Inject constructor(
     private val _list = MutableLiveData<ArrayList<Tembang>>()
     val list: LiveData<ArrayList<Tembang>> = _list
 
-    private val _filter = MutableLiveData<SearchFilter>()
-    val filter: LiveData<SearchFilter> = _filter
+    private val _filter = MutableLiveData<SearchFilter?>()
+    val filter: LiveData<SearchFilter?> = _filter
 
     fun getTembang(filter: SearchFilter? = _filter.value) {
-        _listTembang.value = TembangListEvent.Loading
         viewModelScope.launch {
-            when (val response = repository.getTembang(
-                filter?.subCategory?.id ?: filter?.category?.id,
-                filter?.usageType?.id,
-                filter?.usage?.id,
-                filter?.rule?.id,
-                filter?.mood?.id
-            )) {
-                is Resource.Success -> {
-                    if (response.data.size == 0) _listTembang.value = TembangListEvent.Empty
-                    else {
-                        _listTembang.value = TembangListEvent.Success(response.data)
-                        _list.value = response.data.list
+            if (filter != null) {
+                _listTembang.value = TembangListEvent.Loading
+                when (val response = repository.getTembang(
+                    filter.subCategory?.id ?: filter.category?.id,
+                    filter.usageType?.id,
+                    filter.usage?.id,
+                    filter.rule?.id,
+                    filter.mood?.id
+                )) {
+                    is Resource.Success -> {
+                        if (response.data.size == 0) _listTembang.value = TembangListEvent.Empty
+                        else {
+                            _listTembang.value = TembangListEvent.Success(response.data)
+                            _list.value = response.data.list
+                        }
                     }
+                    is Resource.Error ->
+                        _listTembang.value = TembangListEvent.Error(response.message!!)
+                    is Resource.NetworkError ->
+                        _listTembang.value = TembangListEvent.NetworkError
                 }
-                is Resource.Error ->
-                    _listTembang.value = TembangListEvent.Error(response.message!!)
-                is Resource.NetworkError ->
-                    _listTembang.value = TembangListEvent.NetworkError
+            } else {
+                _list.value = arrayListOf()
             }
         }
     }
 
-    fun setFilter(filter: SearchFilter) {
+    fun setFilter(filter: SearchFilter?) {
         _filter.value = filter
     }
 

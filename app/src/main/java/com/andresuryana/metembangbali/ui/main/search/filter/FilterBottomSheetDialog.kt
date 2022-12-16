@@ -35,7 +35,7 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
     })
 
     // Callback
-    private var onResultCallback: ((filter: SearchFilter) -> Unit)? = null
+    private var onResultCallback: ((filter: SearchFilter?) -> Unit)? = null
 
     // Array adapter
     private lateinit var categoryAdapter: CategoryStringAdapter
@@ -199,13 +199,12 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         // Button reset filter listener
         binding.btnResetFilter.setOnClickListener {
             resetFilter()
-            onResultCallback?.invoke(
-                SearchFilter(null, null, null, null, null, null)
-            )
+            onResultCallback?.invoke(null)
+            dismiss()
         }
     }
 
-    fun setOnResultCallbackListener(onResultCallback: (filter: SearchFilter) -> Unit) {
+    fun setOnResultCallbackListener(onResultCallback: (filter: SearchFilter?) -> Unit) {
         this.onResultCallback = onResultCallback
     }
 
