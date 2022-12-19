@@ -1,8 +1,6 @@
 package com.andresuryana.metembangbali.ui.main.search
 
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -57,9 +55,6 @@ class SearchFragment : Fragment() {
     ): View? {
         // Inflate layout
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-
-        // Set fab icon color
-        binding?.fabSearchFilter?.imageTintList = ColorStateList.valueOf(Color.WHITE)
 
         // Init search filter bottom sheet dialog
         filterBottomSheetDialog = FilterBottomSheetDialog()
