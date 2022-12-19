@@ -97,16 +97,20 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         viewModel.category?.let {
             binding.acCategory.setText(it.name)
         }
-        viewModel.subCategory?.let {
-            binding.acSubCategory.setText(it.name)
-            binding.acSubCategory.visibility = View.VISIBLE
+        if (binding.acCategory.text.isNotBlank()) {
+            viewModel.subCategory?.let {
+                binding.acSubCategory.setText(it.name)
+                binding.acSubCategory.visibility = View.VISIBLE
+            }
         }
         viewModel.usageType?.let {
             binding.acUsageType.setText(it.name)
         }
-        viewModel.usage?.let {
-            binding.acUsage.setText(it.activity)
-            binding.acUsage.visibility = View.VISIBLE
+        if (binding.acUsageType.text.isNotBlank()) {
+            viewModel.usage?.let {
+                binding.acUsage.setText(it.activity)
+                binding.acUsage.visibility = View.VISIBLE
+            }
         }
         viewModel.mood?.let {
             binding.acMood.setText(it.description)
