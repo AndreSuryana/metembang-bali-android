@@ -204,7 +204,7 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         binding.btnResetFilter.setOnClickListener {
             resetFilter()
             onResultCallback?.invoke(null)
-            dismiss()
+            Toast.makeText(activity, R.string.success_reset_filter, Toast.LENGTH_SHORT).show()
         }
     }
 
