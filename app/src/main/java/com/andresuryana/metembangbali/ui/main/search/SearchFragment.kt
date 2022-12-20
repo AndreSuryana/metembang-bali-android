@@ -37,7 +37,7 @@ class SearchFragment : Fragment() {
     })
 
     // Loading dialog
-    private val loadingDialog = LoadingDialogFragment()
+    private var loadingDialog: LoadingDialogFragment? = null
 
     // Search filter bottom sheet dialog
     private var filterBottomSheetDialog: FilterBottomSheetDialog? = null
@@ -166,27 +166,38 @@ class SearchFragment : Fragment() {
         when (event) {
             is TembangListEvent.Success -> {
                 // Update loading/refresh state
-                if (loadingDialog.isVisible) loadingDialog.dismiss()
-                if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
+                loadingDialog?.dismiss()
+                if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing =
+                    false
 
+                // Hide empty container
                 hideEmptyContainer()
             }
             is TembangListEvent.Error -> {
                 // Update loading/refresh state
-                if (loadingDialog.isVisible) loadingDialog.dismiss()
-                if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
+                loadingDialog?.dismiss()
+                if (binding?.swipeRefresh?.isRefreshing == true)
+                    binding?.swipeRefresh?.isRefreshing = false
 
+                // Show empty container
                 showEmptyContainer(R.string.result_not_found)
 
-                binding?.root?.let { Helpers.snackBarError(it, event.message, Snackbar.LENGTH_SHORT).show() }
+                // Show snackbar
+                binding?.root?.let {
+                    Helpers.snackBarError(it, event.message, Snackbar.LENGTH_SHORT).show()
+                }
+
             }
             is TembangListEvent.NetworkError -> {
                 // Update loading/refresh state
-                if (loadingDialog.isVisible) loadingDialog.dismiss()
-                if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
+                loadingDialog?.dismiss()
+                if (binding?.swipeRefresh?.isRefreshing == true)
+                    binding?.swipeRefresh?.isRefreshing = false
 
+                // Show empty container
                 showEmptyContainer(R.string.result_not_found)
 
+                // Show snackbar
                 binding?.root?.let {
                     Helpers.snackBarNetworkError(
                         it,
@@ -198,8 +209,10 @@ class SearchFragment : Fragment() {
                 }
             }
             is TembangListEvent.Loading -> {
-                if (!loadingDialog.isAdded) {
-                    loadingDialog.show(
+                // Update loading state
+                if (loadingDialog?.isVisible == false && loadingDialog?.isAdded == false) {
+                    loadingDialog = LoadingDialogFragment()
+                    loadingDialog?.show(
                         parentFragmentManager,
                         LoadingDialogFragment::class.java.simpleName
                     )
@@ -207,10 +220,14 @@ class SearchFragment : Fragment() {
             }
             is TembangListEvent.Empty -> {
                 // Update loading/refresh state
-                if (loadingDialog.isVisible) loadingDialog.dismiss()
-                if (binding?.swipeRefresh?.isRefreshing == true) binding?.swipeRefresh?.isRefreshing = false
+                loadingDialog?.dismiss()
+                if (binding?.swipeRefresh?.isRefreshing == true)
+                    binding?.swipeRefresh?.isRefreshing = false
 
+                // Show empty container
                 showEmptyContainer(R.string.result_not_found)
+
+                // Remove list on adapter
                 resultAdapter.removeList()
             }
         }
