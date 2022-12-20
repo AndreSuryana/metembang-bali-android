@@ -5,10 +5,11 @@ import com.andresuryana.metembangbali.data.model.SearchFilter
 import com.andresuryana.metembangbali.data.model.Tembang
 import com.andresuryana.metembangbali.data.repository.MetembangRepository
 import com.andresuryana.metembangbali.utils.Resource
+import com.andresuryana.metembangbali.utils.SortMethod
 import com.andresuryana.metembangbali.utils.event.TembangListEvent
-import com.andresuryana.metembangbali.utils.sorting.SelectionSort
-import com.andresuryana.metembangbali.utils.sorting.SelectionSort.Method
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,55 +24,56 @@ class SearchViewModel @Inject constructor(
     private val _list = MutableLiveData<ArrayList<Tembang>>()
     val list: LiveData<ArrayList<Tembang>> = _list
 
-    private val _filter = MutableLiveData<SearchFilter?>()
-    val filter: LiveData<SearchFilter?> = _filter
+    private val _filter = MutableStateFlow<SearchFilter?>(null)
 
-    fun getTembang(filter: SearchFilter? = _filter.value) {
+    private val _sort = MutableStateFlow<SortMethod?>(null)
+
+    fun getTembang() {
         viewModelScope.launch {
-            if (filter != null) {
-                _listTembang.value = TembangListEvent.Loading
-                when (val response = repository.getTembang(
-                    filter.subCategory?.id ?: filter.category?.id,
-                    filter.usageType?.id,
-                    filter.usage?.id,
-                    filter.rule?.id,
-                    filter.mood?.id
-                )) {
-                    is Resource.Success -> {
-                        if (response.data.size == 0) _listTembang.value = TembangListEvent.Empty
-                        else {
-                            _listTembang.value = TembangListEvent.Success(response.data)
-                            _list.value = response.data.list
+            _filter.collectLatest { filter ->
+                _sort.collect { sort ->
+                    if (filter != null) {
+                        _listTembang.value = TembangListEvent.Loading
+                        when (val response = repository.getTembang(
+                            filter.subCategory?.id ?: filter.category?.id,
+                            filter.usageType?.id,
+                            filter.usage?.id,
+                            filter.rule?.id,
+                            filter.mood?.id,
+                            sort
+                        )) {
+                            is Resource.Success -> {
+                                if (response.data.size == 0) _listTembang.value =
+                                    TembangListEvent.Empty
+                                else {
+                                    _listTembang.value = TembangListEvent.Success(response.data)
+                                    _list.value = response.data.list
+                                }
+                            }
+                            is Resource.Error ->
+                                _listTembang.value = TembangListEvent.Error(response.message!!)
+                            is Resource.NetworkError ->
+                                _listTembang.value = TembangListEvent.NetworkError
                         }
+                    } else {
+                        _list.value = arrayListOf()
                     }
-                    is Resource.Error ->
-                        _listTembang.value = TembangListEvent.Error(response.message!!)
-                    is Resource.NetworkError ->
-                        _listTembang.value = TembangListEvent.NetworkError
                 }
-            } else {
-                _list.value = arrayListOf()
             }
         }
     }
 
     fun setFilter(filter: SearchFilter?) {
-        _filter.value = filter
-    }
-
-    fun sortByTitle(method: Method) {
-        if (_list.value?.isNotEmpty() == true) {
-            _list.value = _list.value?.run {
-                SelectionSort(this).sortByTitle(method)
-            }
+        viewModelScope.launch {
+            _filter.emit(filter)
+            getTembang()
         }
     }
 
-    fun sortByDate(method: Method) {
-        if (_list.value?.isNotEmpty() == true) {
-            _list.value = _list.value?.run {
-                SelectionSort(this).sortByDate(method)
-            }
+    fun setSortingMethod(sort: SortMethod) {
+        viewModelScope.launch {
+            _sort.emit(sort)
+            getTembang()
         }
     }
 }

@@ -19,8 +19,8 @@ import com.andresuryana.metembangbali.dialog.LoadingDialogFragment
 import com.andresuryana.metembangbali.helper.Helpers
 import com.andresuryana.metembangbali.ui.main.detail.DetailActivity
 import com.andresuryana.metembangbali.ui.main.search.filter.FilterBottomSheetDialog
+import com.andresuryana.metembangbali.utils.SortMethod
 import com.andresuryana.metembangbali.utils.event.TembangListEvent
-import com.andresuryana.metembangbali.utils.sorting.SelectionSort
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,6 +60,7 @@ class SearchFragment : Fragment() {
         filterBottomSheetDialog = FilterBottomSheetDialog()
         filterBottomSheetDialog?.setOnResultCallbackListener { filter ->
             viewModel.setFilter(filter)
+            resetSortMenu()
         }
 
         // Init popup menu
@@ -74,11 +75,6 @@ class SearchFragment : Fragment() {
         // Observe result
         viewModel.listTembang.observe(viewLifecycleOwner, this::listTembangObserver)
 
-        // Observe search filter
-        viewModel.filter.observe(viewLifecycleOwner) { filter ->
-            viewModel.getTembang(filter)
-        }
-
         // Observe list
         viewModel.list.observe(requireActivity()) {
             if (it.isNotEmpty()) {
@@ -89,9 +85,6 @@ class SearchFragment : Fragment() {
                 // Show empty layout
                 showEmptyContainer()
             }
-
-            // Reset selected sort method
-            resetSortMenu()
         }
 
         // Setup refresh layout listener
@@ -142,16 +135,16 @@ class SearchFragment : Fragment() {
     private fun onMenuSortClickListener(menu: MenuItem) {
         when (menu.itemId) {
             R.id.menu_sort_by_title_asc -> {
-                viewModel.sortByTitle(SelectionSort.Method.ASC)
+                viewModel.setSortingMethod(SortMethod.SORT_BY_TITLE_ASC)
             }
             R.id.menu_sort_by_title_desc -> {
-                viewModel.sortByTitle(SelectionSort.Method.DESC)
+                viewModel.setSortingMethod(SortMethod.SORT_BY_TITLE_DESC)
             }
             R.id.menu_sort_by_date_asc -> {
-                viewModel.sortByDate(SelectionSort.Method.ASC)
+                viewModel.setSortingMethod(SortMethod.SORT_BY_DATE_ASC)
             }
             R.id.menu_sort_by_date_desc -> {
-                viewModel.sortByDate(SelectionSort.Method.DESC)
+                viewModel.setSortingMethod(SortMethod.SORT_BY_DATE_DESC)
             }
         }
         popupMenu?.menu?.findItem(menu.itemId)?.isChecked = true

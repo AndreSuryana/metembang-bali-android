@@ -121,7 +121,8 @@ interface MetembangService {
         @Query("usage_type") usageType: String? = null,
         @Query("usage") usage: String? = null,
         @Query("rule") rule: String? = null,
-        @Query("mood") mood: String? = null
+        @Query("mood") mood: String? = null,
+        @Query("sort") sort: String? = null
     ): Response<Wrapper<ListResponse<Tembang>>>
 
     /**

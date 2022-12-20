@@ -2,6 +2,7 @@ package com.andresuryana.metembangbali.data.repository
 
 import com.andresuryana.metembangbali.data.model.*
 import com.andresuryana.metembangbali.utils.Resource
+import com.andresuryana.metembangbali.utils.SortMethod
 import java.io.File
 import kotlin.collections.ArrayList
 
@@ -105,7 +106,8 @@ interface MetembangRepository {
         usageType: String? = null,
         usage: String? = null,
         rule: String? = null,
-        mood: String? = null
+        mood: String? = null,
+        sort: SortMethod? = null
     ): Resource<ListResponse<Tembang>>
 
     /**

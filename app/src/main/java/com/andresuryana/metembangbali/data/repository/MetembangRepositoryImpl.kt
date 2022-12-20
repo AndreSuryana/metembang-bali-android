@@ -3,6 +3,7 @@ package com.andresuryana.metembangbali.data.repository
 import com.andresuryana.metembangbali.data.model.*
 import com.andresuryana.metembangbali.data.remote.MetembangService
 import com.andresuryana.metembangbali.utils.Resource
+import com.andresuryana.metembangbali.utils.SortMethod
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -342,10 +343,11 @@ class MetembangRepositoryImpl @Inject constructor(
         usageType: String?,
         usage: String?,
         rule: String?,
-        mood: String?
+        mood: String?,
+        sort: SortMethod?
     ): Resource<ListResponse<Tembang>> {
 
-        val response = service.getTembang(category, usageType, usage, rule, mood)
+        val response = service.getTembang(category, usageType, usage, rule, mood, sort?.value)
         val result = response.body()
 
         return try {
