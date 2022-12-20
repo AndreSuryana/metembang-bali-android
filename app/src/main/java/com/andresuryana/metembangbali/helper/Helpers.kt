@@ -12,8 +12,6 @@ import com.andresuryana.metembangbali.utils.ErrorStateConstants.UNAUTHORIZED
 import com.andresuryana.metembangbali.utils.Ext.spaceCamelCase
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -36,14 +34,8 @@ object Helpers {
         }
     }
 
-    fun formatDate(dateString: String?, fromPattern: String = "yyyy-MM-dd'T'HH:mm:ss", toPattern: String = "dd MMMM yyyy"): String? {
-
-        if (dateString == null) return null
-
-        val formatter = DateTimeFormatter.ofPattern(fromPattern)
-        val date = LocalDate.parse(dateString, formatter)
-
-        return date.format(DateTimeFormatter.ofPattern(toPattern))
+    fun formatDate(date: Date, pattern: String): String {
+        return SimpleDateFormat(pattern, Locale.getDefault()).format(date)
     }
 
     fun snackBarError(view: View, message: String, duration: Int = Snackbar.LENGTH_SHORT): Snackbar {
