@@ -14,6 +14,7 @@ import com.andresuryana.metembangbali.databinding.FragmentExploreBinding
 import com.andresuryana.metembangbali.helper.Helpers.snackBarError
 import com.andresuryana.metembangbali.helper.Helpers.snackBarNetworkError
 import com.andresuryana.metembangbali.ui.main.explore.result.ExploreResultFragment
+import com.andresuryana.metembangbali.utils.Ext.spaceCamelCase
 import com.andresuryana.metembangbali.utils.event.SubCategoryEvent
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +48,9 @@ class SubCategoryFragment : Fragment() {
 
         // Get category name from arguments
         categoryId = arguments?.getString(EXTRA_CATEGORY_ID)
+
+        // Set title
+        binding.tvTitle.text = categoryId?.spaceCamelCase()
 
         // Setup adapter
         subCategoryAdapter.setOnItemClickListener(this::onSubCategoryClicked)
