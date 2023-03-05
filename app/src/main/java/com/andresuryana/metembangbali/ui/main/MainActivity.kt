@@ -2,6 +2,7 @@ package com.andresuryana.metembangbali.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.andresuryana.metembangbali.R
@@ -30,10 +31,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (binding.bottomNavigation.selectedItemId == R.id.home) {
-            super.onBackPressed()
+        if (getBackStackEntryCount(supportFragmentManager) >= 2) {
+            supportFragmentManager.popBackStack()
         } else {
-            binding.bottomNavigation.selectedItemId = R.id.home
+            super.onBackPressed()
         }
+    }
+
+    private fun getBackStackEntryCount(fm: FragmentManager): Int {
+        var count = 0
+        fm.fragments.forEach {
+            count += it.childFragmentManager.backStackEntryCount
+        }
+        return count
     }
 }
