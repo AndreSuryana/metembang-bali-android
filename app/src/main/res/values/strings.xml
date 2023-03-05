@@ -127,6 +127,7 @@
     <string name="hint_guru_gatra">contoh: 5</string>
     <string name="hint_guru_wilang">contoh: 1, 2, 3, 4, 5</string>
     <string name="hint_guru_dingdong">contoh: a, i, u, e, o</string>
+    <string name="hint_search">Search...</string>
 
     <!-- Input Helper -->
     <string name="helper_empty_email">Email tidak boleh kosong</string>
