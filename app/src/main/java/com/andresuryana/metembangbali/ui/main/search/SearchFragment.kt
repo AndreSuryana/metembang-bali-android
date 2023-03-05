@@ -2,12 +2,14 @@ package com.andresuryana.metembangbali.ui.main.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -90,6 +92,12 @@ class SearchFragment : Fragment() {
         // Setup refresh layout listener
         binding?.swipeRefresh?.setOnRefreshListener {
             viewModel.getTembang()
+        }
+
+        // Setup search input listener
+        binding?.tilSearch?.editText?.doAfterTextChanged {
+            Log.d("TAG", "onCreateView: ${it.toString()}")
+            viewModel.setKeyword(it.toString())
         }
 
         // Setup button listener

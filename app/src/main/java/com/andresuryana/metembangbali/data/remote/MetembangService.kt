@@ -117,6 +117,7 @@ interface MetembangService {
      */
     @GET("v1/tembang")
     suspend fun getTembang(
+        @Query("q") keyword: String? = null,
         @Query("category") category: String? = null,
         @Query("usage_type") usageType: String? = null,
         @Query("usage") usage: String? = null,

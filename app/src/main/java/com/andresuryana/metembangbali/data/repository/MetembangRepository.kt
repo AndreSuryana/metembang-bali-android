@@ -102,6 +102,7 @@ interface MetembangRepository {
      * Get all tembang with queries
      */
     suspend fun getTembang(
+        keyword: String? = null,
         category: String? = null,
         usageType: String? = null,
         usage: String? = null,

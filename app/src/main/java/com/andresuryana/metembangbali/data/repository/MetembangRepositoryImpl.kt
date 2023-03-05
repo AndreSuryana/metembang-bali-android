@@ -339,6 +339,7 @@ class MetembangRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTembang(
+        keyword: String?,
         category: String?,
         usageType: String?,
         usage: String?,
@@ -347,7 +348,7 @@ class MetembangRepositoryImpl @Inject constructor(
         sort: SortMethod?
     ): Resource<ListResponse<Tembang>> {
 
-        val response = service.getTembang(category, usageType, usage, rule, mood, sort?.value)
+        val response = service.getTembang(keyword, category, usageType, usage, rule, mood, sort?.value)
         val result = response.body()
 
         return try {
