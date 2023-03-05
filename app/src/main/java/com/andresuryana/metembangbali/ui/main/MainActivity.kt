@@ -30,11 +30,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val backStackEntryCount = supportFragmentManager.backStackEntryCount
-        if (backStackEntryCount == 0) {
-            supportFragmentManager.popBackStack()
-        } else {
+        if (binding.bottomNavigation.selectedItemId == R.id.home) {
             super.onBackPressed()
+        } else {
+            binding.bottomNavigation.selectedItemId = R.id.home
         }
     }
 }
